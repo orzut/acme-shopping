@@ -10,6 +10,8 @@ const Category = require("./Category");
 User.hasMany(Order);
 Order.hasMany(LineItem);
 LineItem.belongsTo(Product);
+Product.belongsTo(Category);
+Product.belongsTo(Genre);
 
 module.exports = {
   conn,
