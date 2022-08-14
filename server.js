@@ -1,5 +1,5 @@
 const app = require("./app");
-const { conn, User, Product, CreditCard } = require("./db");
+const { conn, User, Product, CreditCard, Category } = require("./db");
 const { USERS } = require("./db/seed-data-users");
 
 const setUp = async () => {
@@ -13,6 +13,7 @@ const setUp = async () => {
       password: "lucy_pw",
       phone: "123-456-7890",
       userType: "admin",
+    });
     const createdUsers = await Promise.all(
       USERS.map((user) => User.create(user))
     );
@@ -24,6 +25,15 @@ const setUp = async () => {
       pin: 573,
       userId: createdUsers[3].id,
     });
+
+    await Promise.all([
+      Category.create({ name: "Tee Shirts" }),
+      Category.create({ name: "Hoodies" }),
+      Category.create({ name: "Albums" }),
+      Category.create({ name: "Hats" }),
+      Category.create({ name: "Posters" }),
+      Category.create({ name: "Accessories" }),
+    ]);
     // const foo = await Product.create({ name: "foo" });
     // const bar = await Product.create({ name: "bar" });
     // await lucy.addToCart({ product: foo, quantity: 3 });
