@@ -37,11 +37,6 @@ const User = conn.define("user", {
     values: ["user", "admin"],
     defaultValue: "user",
   },
-  username: {
-    type: STRING,
-    allowNull: false,
-    unique: true,
-  },
   password: {
     type: STRING,
     allowNull: false,
@@ -108,7 +103,7 @@ User.prototype.getCart = async function () {
 User.authenticate = async function (credentials) {
   const user = await this.findOne({
     where: {
-      username: credentials.username,
+      email: credentials.email,
     },
   });
   if (user && (await bcrypt.compare(credentials.password, user.password))) {

@@ -5,8 +5,14 @@ const { USERS } = require("./db/seed-data-users");
 const setUp = async () => {
   try {
     await conn.sync({ force: true });
-    // await User.create({ username: "moe", password: "moe_pw" });
-    // const lucy = await User.create({ username: "lucy", password: "lucy_pw" });
+
+    await User.create({
+      firstName: "Lucy",
+      lastName: "Bar",
+      email: "lucy_bar@gmail.com",
+      password: "lucy_pw",
+      phone: "123-456-7890",
+      userType: "admin",
     const createdUsers = await Promise.all(
       USERS.map((user) => User.create(user))
     );
