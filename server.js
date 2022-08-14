@@ -8,6 +8,14 @@ const setUp = async () => {
     // await User.create({ username: "moe", password: "moe_pw" });
     // const lucy = await User.create({ username: "lucy", password: "lucy_pw" });
     await Promise.all(USERS.map((user) => User.create(user)));
+    await User.create({
+      firstName: "Lucy",
+      lastName: "Bar",
+      email: "lucy_bar@gmail.com",
+      password: "lucy_pw",
+      phone: "123-456-7890",
+      userType: "admin",
+    });
     // const foo = await Product.create({ name: "foo" });
     // const bar = await Product.create({ name: "bar" });
     // await lucy.addToCart({ product: foo, quantity: 3 });

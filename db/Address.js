@@ -23,7 +23,7 @@ const Address = conn.define("address", {
     type: STRING(5),
     allowNull: false,
     validate: {
-      is: /^[0-9a-f]{5}$/i,
+      is: /^[0-9]{5}$/i,
     },
   },
 });
