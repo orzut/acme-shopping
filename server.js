@@ -2,6 +2,7 @@ const app = require("./app");
 const { conn, User, Product, CreditCard, Category } = require("./db");
 const { USERS } = require("./db/seedData/seedDataUsers");
 const { CATEGORIES } = require("./db/seedData/seedDataCategories");
+const { GENRES } = require("./db/seedData/seedDataGenres");
 
 const setUp = async () => {
   try {
