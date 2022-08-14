@@ -1,5 +1,5 @@
 const { faker } = require("@faker-js/faker");
-const User = require("./User");
+// const { User } = require("../db");
 
 let USERS = [];
 

@@ -1,6 +1,7 @@
 const app = require("./app");
 const { conn, User, Product, CreditCard, Category } = require("./db");
-const { USERS } = require("./db/seed-data-users");
+const { USERS } = require("./db/seedData/seedDataUsers");
+const { CATEGORIES } = require("./db/seedData/seedDataCategory");
 
 const setUp = async () => {
   try {
@@ -25,15 +26,9 @@ const setUp = async () => {
       pin: 573,
       userId: createdUsers[3].id,
     });
-
-    await Promise.all([
-      Category.create({ name: "Tee Shirts" }),
-      Category.create({ name: "Hoodies" }),
-      Category.create({ name: "Albums" }),
-      Category.create({ name: "Hats" }),
-      Category.create({ name: "Posters" }),
-      Category.create({ name: "Accessories" }),
-    ]);
+    await Promise.all(
+      CATEGORIES.map((category) => Category.create({ name: category }))
+    );
     // const foo = await Product.create({ name: "foo" });
     // const bar = await Product.create({ name: "bar" });
     // await lucy.addToCart({ product: foo, quantity: 3 });
