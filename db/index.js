@@ -14,6 +14,8 @@ Order.hasMany(LineItem);
 LineItem.belongsTo(Product);
 CreditCard.belongsTo(User);
 Address.belongsTo(User);
+Product.belongsTo(Category);
+Product.belongsTo(Genre);
 
 module.exports = {
   conn,
