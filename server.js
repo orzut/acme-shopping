@@ -1,13 +1,11 @@
 const app = require("./app");
-const { conn, User, Product } = require("./db");
+const { conn, User, Product, CreditCard } = require("./db");
 const { USERS } = require("./db/seed-data-users");
 
 const setUp = async () => {
   try {
     await conn.sync({ force: true });
-    // await User.create({ username: "moe", password: "moe_pw" });
-    // const lucy = await User.create({ username: "lucy", password: "lucy_pw" });
-    await Promise.all(USERS.map((user) => User.create(user)));
+
     await User.create({
       firstName: "Lucy",
       lastName: "Bar",
@@ -15,6 +13,16 @@ const setUp = async () => {
       password: "lucy_pw",
       phone: "123-456-7890",
       userType: "admin",
+    const createdUsers = await Promise.all(
+      USERS.map((user) => User.create(user))
+    );
+    await CreditCard.create({
+      nameOnCard: "Moe Foo",
+      number: "1234123412341234",
+      expirationMonth: 4,
+      expirationYear: 25,
+      pin: 573,
+      userId: createdUsers[3].id,
     });
     // const foo = await Product.create({ name: "foo" });
     // const bar = await Product.create({ name: "bar" });
