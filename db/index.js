@@ -11,6 +11,8 @@ const Address = require("./Address");
 User.hasMany(Order);
 Order.hasMany(LineItem);
 LineItem.belongsTo(Product);
+Product.belongsTo(Category);
+Product.belongsTo(Genre);
 
 module.exports = {
   conn,
