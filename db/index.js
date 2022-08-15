@@ -9,7 +9,11 @@ const Category = require("./Category");
 const Address = require("./Address");
 const CreditCard = require("./CreditCard");
 
-User.hasMany(Order);
+User.hasMany(Order, {
+  foreignKey: {
+    allowNull: false,
+  },
+});
 Order.hasMany(LineItem);
 LineItem.belongsTo(Product);
 CreditCard.belongsTo(User);
