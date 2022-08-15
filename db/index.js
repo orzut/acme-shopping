@@ -14,7 +14,11 @@ Order.hasMany(LineItem);
 LineItem.belongsTo(Product);
 CreditCard.belongsTo(User);
 Address.belongsTo(User);
-Product.belongsTo(Category);
+Product.belongsTo(Category, {
+  foreignKey: {
+    allowNull: false
+  }
+});
 Product.belongsTo(Genre);
 
 module.exports = {
