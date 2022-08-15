@@ -31,6 +31,9 @@ const User = conn.define("user", {
   phone: {
     type: STRING,
     allowNull: false,
+    validate: {
+      is: /^[0-9-]+$/,
+    },
   },
   userType: {
     type: ENUM,
