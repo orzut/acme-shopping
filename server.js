@@ -1,7 +1,10 @@
 const app = require("./app");
-const { conn, User, Product, CreditCard, Category } = require("./db");
+const { conn, User, Product, CreditCard, Category, Genre } = require("./db");
 const { USERS } = require("./db/seedData/seedDataUsers");
 const { CATEGORIES } = require("./db/seedData/seedDataCategories");
+
+const { GENRES } = require("./db/seedData/seedDataGenres");
+
 
 const setUp = async () => {
   try {
@@ -28,6 +31,9 @@ const setUp = async () => {
     });
     await Promise.all(
       CATEGORIES.map((category) => Category.create({ name: category }))
+    );
+    await Promise.all(
+      GENRES.map((genre) => Genre.create({ name: genre }))
     );
     // const foo = await Product.create({ name: "foo" });
     // const bar = await Product.create({ name: "bar" });
