@@ -1,0 +1,63 @@
+.Nav {
+  margin: 0.5rem;
+}
+
+#header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#header > h1 {
+  margin: 0rem;
+}
+
+#header > div {
+  display: flex;
+  align-items: center;
+}
+
+#header > div > * {
+  font-size: 1.3rem;
+  padding: 0.7rem;
+  margin: 0.3rem;
+}
+
+#header > div > button {
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+#header > div > i:hover,
+#navTabs > a:hover {
+  transition: all 0.2s;
+  color: darkgrey;
+}
+
+#header > div > button:hover {
+  transition: all 0.2s;
+  background-color: darkgrey;
+}
+
+#navTabs {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#navTabs > a {
+  text-decoration: none;
+  color: black;
+}
+
+#navTabs > a > h2 {
+  font-weight: 300;
+  padding: 0.25rem;
+  margin: 0.25rem;
+  width: 15rem;
+  text-align: center;
+}
