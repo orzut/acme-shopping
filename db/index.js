@@ -20,10 +20,14 @@ CreditCard.belongsTo(User);
 Address.belongsTo(User);
 Product.belongsTo(Category, {
   foreignKey: {
-    allowNull: false
-  }
+    allowNull: false,
+  },
 });
-Product.belongsTo(Genre);
+Product.belongsTo(Genre, {
+  foreignKey: {
+    allowNull: false,
+  },
+});
 
 module.exports = {
   conn,
