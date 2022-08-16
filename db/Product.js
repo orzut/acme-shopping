@@ -24,6 +24,7 @@ const Product = conn.define("product", {
     type: TEXT,
   },
   cost: {
+    allowNull: false,
     type: DECIMAL(10, 2),
     defaultValue: 0,
   },
