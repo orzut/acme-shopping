@@ -36,6 +36,7 @@
 #navTabs > a:hover,
 .dropbtn:hover {
   transition: all 0.2s;
+  cursor: pointer;
   color: darkgrey;
   cursor: pointer;
 }
