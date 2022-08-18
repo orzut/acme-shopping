@@ -1,6 +1,12 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
-import { fetchCart, exchangeToken, logout } from "./store";
+import {
+  fetchCart,
+  exchangeToken,
+  logout,
+  fetchCategories,
+  fetchGenres,
+} from "./store";
 import { Link, Route, Switch } from "react-router-dom";
 import SignIn from "./SignIn";
 import Cart from "./Cart";
@@ -12,6 +18,8 @@ import Categories from "./Categories";
 class App extends React.Component {
   componentDidMount() {
     this.props.exchangeToken();
+    this.props.loadCategories();
+    this.props.loadGenres();
   }
   componentDidUpdate(prevProps) {
     if (!prevProps.auth.id && this.props.auth.id) {
@@ -57,6 +65,8 @@ const mapDispatch = (dispatch) => {
     exchangeToken: () => dispatch(exchangeToken()),
     logout: () => dispatch(logout()),
     fetchCart: () => dispatch(fetchCart()),
+    loadCategories: () => dispatch(fetchCategories()),
+    loadGenres: () => dispatch(fetchGenres()),
   };
 };
 const mapStateToProps = (state) => {

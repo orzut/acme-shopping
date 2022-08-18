@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-const Genres = () => {
+const Genres = ({ genres }) => {
   return <h1>Genres Page</h1>;
 };
 
