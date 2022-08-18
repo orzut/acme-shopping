@@ -34,7 +34,7 @@ class Nav extends React.Component {
   }
 
   render() {
-    const { session, logout } = this.props;
+    const { session, genres, categories } = this.props;
     const { accountModalIsOpen } = this.state;
     const { onClickUser, closeAccountModal, onLogout } = this;
     return (
@@ -52,15 +52,40 @@ class Nav extends React.Component {
           </div>
         </div>
         <div id="navTabs">
-          <Link to="/">
-            <h2>HOME</h2>
-          </Link>
-          <Link to="/genres">
-            <h2>GENRES</h2>
-          </Link>
-          <Link to="/categories">
-            <h2>CATEGORIES</h2>
-          </Link>
+          <Link to="/">HOME</Link>
+          <div className="dropdown">
+            <Link to="/genres" className="dropbtn">
+              GENRES
+            </Link>
+            <div className="dropdown-items">
+              {" "}
+              {genres.map((genre) => {
+                return (
+                  <Link key={genre.id} to={`/products/genre/${genre.id}`}>
+                    {genre.name}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+          <div className="dropdown">
+            <Link to="/categories" className="dropbtn">
+              CATEGORIES
+            </Link>{" "}
+            <div className="dropdown-items">
+              {" "}
+              {categories.map((category) => {
+                return (
+                  <Link
+                    key={category.id}
+                    to={`/products/categories/${category.id}`}
+                  >
+                    {category.name}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
     );

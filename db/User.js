@@ -47,7 +47,9 @@ const User = conn.define("user", {
 });
 
 User.addHook("beforeSave", async (user) => {
-  user.password = await bcrypt.hash(user.password, 5);
+  if (user.changed("password")) {
+    user.password = await bcrypt.hash(user.password, 5);
+  }
 });
 
 User.prototype.createOrderFromCart = async function () {
@@ -126,6 +128,20 @@ User.findByToken = async function findByToken(token) {
       throw "error";
     }
     return user;
+  } catch (ex) {
+    const error = new Error("bad token");
+    error.status = 401;
+    throw error;
+  }
+};
+
+User.isAdmin = async function isAdmin(token) {
+  try {
+    const id = jwt.verify(token, process.env.JWT).id;
+    const user = await User.findByPk(id);
+    if (user.userType === "admin") {
+      return user;
+    } else throw "error";
   } catch (ex) {
     const error = new Error("bad token");
     error.status = 401;
