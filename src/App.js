@@ -6,6 +6,7 @@ import {
   logout,
   fetchCategories,
   fetchGenres,
+  fetchProducts,
 } from "./store";
 import { Link, Route, Switch } from "react-router-dom";
 import SignIn from "./SignIn";
@@ -14,12 +15,14 @@ import Nav from "./Nav";
 import Home from "./Home";
 import Genres from "./Genres";
 import Categories from "./Categories";
+import Products from "./Products";
 
 class App extends React.Component {
   componentDidMount() {
     this.props.exchangeToken();
     this.props.loadCategories();
     this.props.loadGenres();
+    this.props.loadProducts();
   }
   componentDidUpdate(prevProps) {
     if (!prevProps.auth.id && this.props.auth.id) {
@@ -38,9 +41,11 @@ class App extends React.Component {
           <Route path="/genres" exact>
             <Genres />
           </Route>
+          <Route path="/products/genre/:id" component={Products}></Route>
           <Route path="/categories" exact>
             <Categories />
           </Route>
+          <Route path="/products/category/:id" component={Products}></Route>
         </Switch>
 
         {auth.id ? (
@@ -67,6 +72,7 @@ const mapDispatch = (dispatch) => {
     fetchCart: () => dispatch(fetchCart()),
     loadCategories: () => dispatch(fetchCategories()),
     loadGenres: () => dispatch(fetchGenres()),
+    loadProducts: () => dispatch(fetchProducts()),
   };
 };
 const mapStateToProps = (state) => {

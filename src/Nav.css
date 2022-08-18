@@ -83,6 +83,7 @@
 }
 .dropdown-items a:hover {
   background-color: #ddd;
+  transition: all 0.2s;
 }
 
 .dropdown:hover .dropdown-items {

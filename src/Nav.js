@@ -42,7 +42,7 @@ const Nav = ({ auth, categories, genres }) => {
               return (
                 <Link
                   key={category.id}
-                  to={`/products/categories/${category.id}`}
+                  to={`/products/category/${category.id}`}
                 >
                   {category.name}
                 </Link>
