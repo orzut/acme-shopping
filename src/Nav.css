@@ -35,6 +35,7 @@
 #header > div > i:hover,
 #navTabs > a:hover {
   transition: all 0.2s;
+  cursor: pointer;
   color: darkgrey;
 }
 

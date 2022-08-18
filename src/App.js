@@ -8,21 +8,22 @@ import Nav from "./Nav";
 import Home from "./Home";
 import Genres from "./Genres";
 import Categories from "./Categories";
+import Account from "./Account";
 
 class App extends React.Component {
   componentDidMount() {
     this.props.exchangeToken();
   }
   componentDidUpdate(prevProps) {
-    if (!prevProps.auth.id && this.props.auth.id) {
+    if (!prevProps.session.auth.id && this.props.session.auth.id) {
       this.props.fetchCart();
     }
   }
   render() {
-    const { auth, logout, cart } = this.props;
+    const { session, logout, cart } = this.props;
     return (
       <main>
-        <Nav />
+        <Route component={Nav} />
         <Switch>
           <Route path="/" exact>
             <Home />
@@ -33,17 +34,12 @@ class App extends React.Component {
           <Route path="/categories" exact>
             <Categories />
           </Route>
+          <Route path="/account" component={Account} />
         </Switch>
-
-        {auth.id ? (
-          <button onClick={logout}>Logout {auth.username}</button>
-        ) : (
-          <SignIn />
-        )}
-        {auth.id ? (
+        {session.auth.id ? (
           <Link to="/cart">Cart ({cart.lineItems.length})</Link>
         ) : null}
-        {auth.id ? (
+        {session.auth.id ? (
           <Fragment>
             <Route path="/cart" component={Cart} />
           </Fragment>
