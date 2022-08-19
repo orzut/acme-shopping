@@ -31,7 +31,7 @@ class App extends React.Component {
     const { session, logout, cart } = this.props;
     return (
       <main>
-        <Route component={Nav} />
+        <Route path="/:view?" component={Nav} />
         <Switch>
           <Route path="/" exact>
             <Home />
