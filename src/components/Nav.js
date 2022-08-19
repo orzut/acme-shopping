@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import AccountModal from "./AccountModal";
-import { logout } from "./store";
-import "./Nav.css";
+import { logout } from "../store";
+import "../Nav.css";
 
 class Nav extends React.Component {
   constructor() {

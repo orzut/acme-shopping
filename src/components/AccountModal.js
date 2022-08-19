@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import "./AccountModal.css";
+import "../AccountModal.css";
 import SignInForm from "./SignInForm";
 import SignUpForm from "./SignUpForm";
 
