@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AccountModal from "./AccountModal";
 import { logout } from "./store";
 import "./Nav.css";
@@ -18,7 +18,10 @@ class Nav extends React.Component {
 
   onClickUser() {
     if (this.props.session.auth.id) {
-      this.props.history.push("/account");
+      console.log(this.props.match.params.view);
+      if (this.props.match.params.view !== "account") {
+        this.props.history.push("/account");
+      }
     } else {
       this.setState({ accountModalIsOpen: true });
     }
@@ -29,8 +32,11 @@ class Nav extends React.Component {
   }
 
   onLogout() {
+    console.log(this.props.match);
     this.props.logout();
-    this.props.history.push("/");
+    if (this.props.match.params.view === "account") {
+      this.props.history.push("/");
+    }
   }
 
   render() {
