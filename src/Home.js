@@ -14,7 +14,7 @@ const Home = ({ categories, products }) => {
               to={`/products/category/${category.id}`}
               className="category-name"
             >
-              <h2>{category.name}</h2>
+              <h2>Shop {category.name}</h2>
             </Link>
             <div className="pr">
               {products
@@ -35,7 +35,7 @@ const Home = ({ categories, products }) => {
                 })}
             </div>
             <div className="see-more">
-              <Link to={`/products/category/${category.id}`}>See More...</Link>
+              <Link to={`/products/category/${category.id}`}>See More ></Link>
             </div>
           </div>
         );

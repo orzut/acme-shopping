@@ -1,28 +1,26 @@
 import React from "react";
 import { connect } from "react-redux";
 
-const Products = ({ products, byCategories, byGenres, otherParams }) => {
+const Products = ({ byCategories, byGenres, match }) => {
   return (
     <div>
-      <h1>Products</h1>
-      {(otherParams.match.path === "/products/genre/:id"
-        ? byGenres
-        : byCategories
-      ).map((product) => {
-        return <li key={product.id}>{product.name}</li>;
-      })}
+      {(match.path === "/products/genre/:id" ? byGenres : byCategories).map(
+        (product) => {
+          return <li key={product.id}>{product.name}</li>;
+        }
+      )}
     </div>
   );
 };
 
-const mapStateToProps = ({ products }, otherParams) => {
+const mapStateToProps = ({ products, categories, genres }, { match }) => {
   const byCategories = products.filter(
-    (product) => product.categoryId === +otherParams.match.params.id
+    (product) => product.categoryId === +match.params.id
   );
   const byGenres = products.filter(
-    (product) => product.genreId === +otherParams.match.params.id
+    (product) => product.genreId === +match.params.id
   );
-  return { products, byCategories, byGenres, otherParams };
+  return { byCategories, byGenres, match };
 };
 
 export default connect(mapStateToProps)(Products);
