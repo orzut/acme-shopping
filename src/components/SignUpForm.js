@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { createUser } from "./store";
+import { createUser } from "../store";
 import "../SignUpForm.css";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
