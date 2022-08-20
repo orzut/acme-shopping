@@ -1,0 +1,64 @@
+#account-page {
+  margin: 3rem;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  width: 12rem;
+  border-right: 2px solid black;
+  margin-right: 2rem;
+}
+nav a {
+  text-decoration: none;
+  font-size: 17px;
+  background-color: 343a40;
+  color: edf2f4;
+  padding: 1rem;
+  width: auto;
+  margin: 0.5rem;
+}
+
+.container {
+  display: flex;
+}
+
+.personal-info td {
+  border: 1px solid black;
+  padding: 1rem;
+  box-shadow: inset 2px 0px 0px 0px rgb(201, 199, 199);
+}
+i {
+  margin: 1rem 0 0 1rem;
+  cursor: pointer;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  width: 20rem;
+  margin: 2rem 0 0 14rem;
+}
+
+.edit-form > * {
+  margin: 5px;
+}
+
+.edit-form input {
+  height: 30px;
+  border: none;
+  border-bottom: 2px solid black;
+}
+
+.edit-form button {
+  height: 30px;
+  background-color: 343a40;
+  color: edf2f4;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.edit-form button:hover,
+nav a:hover {
+  background-color: rgb(100, 99, 104);
+}
