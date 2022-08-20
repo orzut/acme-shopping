@@ -1,4 +1,13 @@
-const { conn, User, Product, CreditCard, Category, Genre } = require("../");
+const {
+  conn,
+  User,
+  Product,
+  CreditCard,
+  Category,
+  Genre,
+  Order,
+  LineItem,
+} = require("../");
 const { USERS } = require("./seedDataUsers");
 const { CATEGORIES } = require("./seedDataCategories");
 
@@ -8,7 +17,7 @@ const syncAndSeed = async () => {
   try {
     await conn.sync({ force: true });
 
-    await User.create({
+    const lucy = await User.create({
       firstName: "Lucy",
       lastName: "Bar",
       email: "lucy_bar@gmail.com",
@@ -37,7 +46,7 @@ const syncAndSeed = async () => {
       await Promise.all(GENRES.map((genre) => Genre.create({ name: genre })));
 
     //Temporary product seeding for front end development
-    await Product.create({
+    const metallica = await Product.create({
       name: "Metallica T-Shirt",
       cost: 5.99,
       image:
@@ -45,7 +54,7 @@ const syncAndSeed = async () => {
       categoryId: teeShirts.id,
       genreId: rock.id,
     });
-    await Product.create({
+    const smashingPumpkins = await Product.create({
       name: "Smashing Pumpkins T-Shirt",
       cost: 15.99,
       image:
@@ -53,7 +62,7 @@ const syncAndSeed = async () => {
       categoryId: teeShirts.id,
       genreId: rock.id,
     });
-    await Product.create({
+    const hendrix = await Product.create({
       name: "Jimi Hendrix T-shirt",
       cost: 8.99,
       image:
@@ -61,7 +70,7 @@ const syncAndSeed = async () => {
       categoryId: teeShirts.id,
       genreId: rock.id,
     });
-    await Product.create({
+    const nsync = await Product.create({
       name: "N-Sync T-Shirt",
       cost: 10.99,
       image:
@@ -69,7 +78,7 @@ const syncAndSeed = async () => {
       categoryId: teeShirts.id,
       genreId: pop.id,
     });
-    await Product.create({
+    const pinkFloyd = await Product.create({
       name: "Pink Floyd Album",
       cost: 20.99,
       image:
@@ -77,13 +86,50 @@ const syncAndSeed = async () => {
       categoryId: albums.id,
       genreId: rock.id,
     });
-    await Product.create({
+    const kendrickLamar = await Product.create({
       name: "Kendrick Lamar Album",
       cost: 20.99,
       image:
         "https://merchbar.imgix.net/product/4/1616/19226798/T830LL-1540265001-3601x3601-1540264977-007_Kendrick%20Lamar_Good%20Kid,%20M%20A%20A%20D%20City_01.jpg?quality=60&auto=compress,format&w=390&h=390",
       categoryId: albums.id,
       genreId: hipHop.id,
+    });
+
+    const date = new Date();
+    const lucyCart = await Order.create({
+      userId: lucy.id,
+      orderDate: date,
+    });
+
+    await LineItem.create({
+      quantity: 5,
+      productId: metallica.id,
+      orderId: lucyCart.id,
+    });
+    await LineItem.create({
+      quantity: 5,
+      productId: smashingPumpkins.id,
+      orderId: lucyCart.id,
+    });
+    await LineItem.create({
+      quantity: 5,
+      productId: hendrix.id,
+      orderId: lucyCart.id,
+    });
+    await LineItem.create({
+      quantity: 5,
+      productId: pinkFloyd.id,
+      orderId: lucyCart.id,
+    });
+    await LineItem.create({
+      quantity: 5,
+      productId: nsync.id,
+      orderId: lucyCart.id,
+    });
+    await LineItem.create({
+      quantity: 5,
+      productId: kendrickLamar.id,
+      orderId: lucyCart.id,
     });
   } catch (ex) {
     console.log(ex);

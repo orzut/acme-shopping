@@ -17,6 +17,7 @@ import Genres from "./Genres";
 import Categories from "./Categories";
 import Products from "./Products";
 import Account from "./Account";
+import CartModal from "./CartModal";
 
 class App extends React.Component {
   componentDidMount() {
@@ -55,6 +56,7 @@ class App extends React.Component {
         {session.auth.id ? (
           <Fragment>
             <Route path="/cart" component={Cart} />
+            <Route path="/cart" component={CartModal} />
           </Fragment>
         ) : null}
       </main>

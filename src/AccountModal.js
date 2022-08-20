@@ -23,7 +23,7 @@ class AccountModal extends React.Component {
     const { isFlipped } = this.state;
     const { flipModal } = this;
     return (
-      <div>
+      <div id="accountModal">
         <div className="modalBackground" onClick={() => closeAccountModal()} />
         <div className="modal">
           <div className={isFlipped ? "isFlipped sides" : "sides"}>
