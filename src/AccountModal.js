@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import "./AccountModal.css";
 import SignInForm from "./SignInForm";
 import SignUpForm from "./SignUpForm";
+import { closeAccountModal } from "./store";
 
 class AccountModal extends React.Component {
   constructor() {
@@ -35,4 +36,12 @@ class AccountModal extends React.Component {
   }
 }
 
-export default connect((state) => state)(AccountModal);
+const mapDispatch = (dispatch) => {
+  return {
+    closeAccountModal: () => {
+      dispatch(closeAccountModal());
+    },
+  };
+};
+
+export default connect((state) => state, mapDispatch)(AccountModal);
