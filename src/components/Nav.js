@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import AccountModal from "./AccountModal";
-import { logout, openAccountModal, closeAccountModal } from "./store";
-import "./Nav.css";
+import { logout, openAccountModal, closeAccountModal } from "../store";
+import "../Nav.css";
 
 class Nav extends React.Component {
   constructor() {
@@ -33,7 +33,6 @@ class Nav extends React.Component {
   // }
 
   onLogout() {
-    console.log(this.props.match);
     this.props.logout();
     if (this.props.match.params.view === "account") {
       this.props.history.push("/");

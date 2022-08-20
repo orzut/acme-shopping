@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import "./Home.css";
+import "../Home.css";
 
 const Home = ({ categories, products }) => {
   return (
@@ -16,10 +16,10 @@ const Home = ({ categories, products }) => {
             >
               <h2>Shop {category.name}</h2>
             </Link>
-            <div className="pr">
+            <div className="products-list">
               {products
                 .filter((product) => product.categoryId === category.id)
-                .slice(0, 3)
+                .slice(0, 4)
                 .map((product) => {
                   return (
                     <Link

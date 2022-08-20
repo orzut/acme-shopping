@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { login } from "./store";
-import "./SignInForm.css";
+import { login } from "../store";
+import "../SignInForm.css";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 

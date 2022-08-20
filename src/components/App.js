@@ -7,7 +7,7 @@ import {
   fetchCategories,
   fetchGenres,
   fetchProducts,
-} from "./store";
+} from "../store";
 import { Link, Route, Switch } from "react-router-dom";
 import SignIn from "./SignIn";
 import Cart from "./Cart";
