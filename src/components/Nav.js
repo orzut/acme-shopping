@@ -18,7 +18,6 @@ class Nav extends React.Component {
 
   onClickUser() {
     if (this.props.session.auth.id) {
-      console.log(this.props.match.params.view);
       if (this.props.match.params.view !== "account") {
         this.props.history.push("/account");
       }
@@ -32,7 +31,6 @@ class Nav extends React.Component {
   }
 
   onLogout() {
-    console.log(this.props.match);
     this.props.logout();
     if (this.props.match.params.view === "account") {
       this.props.history.push("/");

@@ -10,6 +10,8 @@ const session = (state = initialState, action) => {
     state = { ...state, auth: action.auth };
   } else if (action.type === "SET_INVALID_LOGIN") {
     state = { ...state, invalidLogin: true };
+  } else if (action.type === "UPDATE_USER") {
+    return { ...state, auth: action.auth };
   }
   return state;
 };
@@ -53,6 +55,26 @@ export const login = (credentials) => {
         dispatch({ type: "SET_INVALID_LOGIN" });
       }
       //console.log(err.response.status);
+    }
+  };
+};
+
+export const updateUser = (auth) => {
+  return async (dispatch) => {
+    try {
+      const token = window.localStorage.getItem("token");
+      if (token) {
+        auth = (
+          await axios.put("/api/sessions/", auth, {
+            headers: {
+              authorization: token,
+            },
+          })
+        ).data;
+        dispatch({ type: "UPDATE_USER", auth });
+      }
+    } catch (ex) {
+      console.log(ex);
     }
   };
 };
