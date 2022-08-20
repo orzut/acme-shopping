@@ -97,7 +97,11 @@ User.prototype.getCart = async function () {
     ],
   });
   if (!order) {
-    order = await conn.models.order.create({ userId: this.id });
+    const date = new Date();
+    order = await conn.models.order.create({
+      userId: this.id,
+      orderDate: date,
+    });
     order = await conn.models.order.findByPk(order.id, {
       include: [conn.models.lineItem],
     });

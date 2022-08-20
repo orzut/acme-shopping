@@ -11,8 +11,6 @@ class SignInForm extends React.Component {
     this.state = {
       email: "",
       password: "",
-      emailIsInvalid: false,
-      passwordIsInvalid: false,
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -21,25 +19,11 @@ class SignInForm extends React.Component {
   onChange(ev) {
     this.setState({
       [ev.target.name]: ev.target.value,
-      emailIsInvalid: false,
-      passwordIsInvalid: false,
     });
   }
 
   onSubmit(ev) {
     ev.preventDefault();
-    if (
-      !this.state.email.includes("@") ||
-      !this.state.email.includes(".com") ||
-      this.state.email.length === 0
-    ) {
-      this.setState({ emailIsInvalid: true });
-      return;
-    }
-    if (this.state.password.length === 0) {
-      this.setState({ passwordIsInvalid: true });
-      return;
-    }
     const credentials = {
       email: this.state.email,
       password: this.state.password,
@@ -49,7 +33,7 @@ class SignInForm extends React.Component {
 
   render() {
     const { flipModal, session } = this.props;
-    const { email, password, emailIsInvalid, passwordIsInvalid } = this.state;
+    const { email, password } = this.state;
     const { onChange, onSubmit } = this;
 
     return (
@@ -58,25 +42,22 @@ class SignInForm extends React.Component {
         <h4>SIGN IN BELOW</h4>
         <form onSubmit={onSubmit}>
           <TextField
+            required
+            type="email"
             name="email"
             label="Email"
             size="small"
             onChange={onChange}
             value={email}
-            error={emailIsInvalid}
-            helperText={
-              emailIsInvalid ? "Required field. Must include '@'" : " "
-            }
           />
           <TextField
+            required
             name="password"
             type="password"
             label="Password"
             size="small"
             onChange={onChange}
             value={password}
-            error={passwordIsInvalid}
-            helperText={passwordIsInvalid ? "Required field" : " "}
           />
           <Button type="submit" variant="contained">
             SIGN IN
