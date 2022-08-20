@@ -3,6 +3,7 @@ import axios from "axios";
 const initialState = {
   auth: {},
   invalidLogin: false,
+  accountModalIsOpen: false,
 };
 
 const session = (state = initialState, action) => {
@@ -10,6 +11,10 @@ const session = (state = initialState, action) => {
     state = { ...state, auth: action.auth };
   } else if (action.type === "SET_INVALID_LOGIN") {
     state = { ...state, invalidLogin: true };
+  } else if (action.type === "OPEN_ACCOUNT_MODAL") {
+    state = { ...state, accountModalIsOpen: true };
+  } else if (action.type === "CLOSE_ACCOUNT_MODAL") {
+    state = { ...state, accountModalIsOpen: false };
   }
   return state;
 };
@@ -35,6 +40,7 @@ export const exchangeToken = () => {
     }
   };
 };
+
 export const login = (credentials) => {
   return async (dispatch) => {
     try {
@@ -48,12 +54,52 @@ export const login = (credentials) => {
       });
       const auth = response.data;
       dispatch({ auth, type: "SET_AUTH" });
+      dispatch({ type: "CLOSE_ACCOUNT_MODAL" });
     } catch (err) {
       if (err.response.status === 401) {
         dispatch({ type: "SET_INVALID_LOGIN" });
       }
       //console.log(err.response.status);
     }
+  };
+};
+
+export const openAccountModal = () => {
+  return (dispatch) => {
+    dispatch({ type: "OPEN_ACCOUNT_MODAL" });
+  };
+};
+
+export const closeAccountModal = () => {
+  return (dispatch) => {
+    dispatch({ type: "CLOSE_ACCOUNT_MODAL" });
+  };
+};
+
+export const createUser = (user) => {
+  return async (dispatch) => {
+    try {
+      //console.log(user);
+      let createdUser = (await axios.post("/api/users", user)).data;
+      console.log(createdUser);
+      let response = await axios.post("/api/sessions", {
+        email: user.email,
+        password: user.password,
+      });
+      const { token } = response.data;
+      window.localStorage.setItem("token", token);
+      response = await axios.get("/api/sessions", {
+        headers: {
+          authorization: token,
+        },
+      });
+      const auth = response.data;
+      dispatch({ auth, type: "SET_AUTH" });
+      dispatch({ type: "CLOSE_ACCOUNT_MODAL" });
+    } catch (err) {
+      console.log(err);
+    }
+    //dispatch({ type: "CREATE_USER" });
   };
 };
 

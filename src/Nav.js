@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import AccountModal from "./AccountModal";
-import { logout } from "./store";
+import { logout, openAccountModal, closeAccountModal } from "./store";
 import "./Nav.css";
 
 class Nav extends React.Component {
@@ -12,24 +12,25 @@ class Nav extends React.Component {
       accountModalIsOpen: false,
     };
     this.onClickUser = this.onClickUser.bind(this);
-    this.closeAccountModal = this.closeAccountModal.bind(this);
+    //this.closeAccountModal = this.closeAccountModal.bind(this);
     this.onLogout = this.onLogout.bind(this);
   }
 
   onClickUser() {
     if (this.props.session.auth.id) {
-      console.log(this.props.match.params.view);
       if (this.props.match.params.view !== "account") {
         this.props.history.push("/account");
       }
     } else {
-      this.setState({ accountModalIsOpen: true });
+      console.log("this ran");
+      this.props.openAccountModal();
+      //this.setState({ accountModalIsOpen: true });
     }
   }
 
-  closeAccountModal() {
-    this.setState({ accountModalIsOpen: false });
-  }
+  // closeAccountModal() {
+  //   this.setState({ accountModalIsOpen: false });
+  // }
 
   onLogout() {
     console.log(this.props.match);
@@ -40,14 +41,12 @@ class Nav extends React.Component {
   }
 
   render() {
-    const { session, genres, categories } = this.props;
-    const { accountModalIsOpen } = this.state;
-    const { onClickUser, closeAccountModal, onLogout } = this;
+    const { session, genres, categories, openAccountModal } = this.props;
+    //const { accountModalIsOpen } = this.state;
+    const { onClickUser, onLogout } = this;
     return (
       <div className="Nav">
-        {accountModalIsOpen ? (
-          <AccountModal closeAccountModal={closeAccountModal} />
-        ) : null}
+        {session.accountModalIsOpen ? <AccountModal /> : null}
         <div id="header">
           <h1>Grace Shopper</h1>
           <div>
@@ -102,6 +101,12 @@ const mapDispatch = (dispatch) => {
   return {
     logout: () => {
       dispatch(logout());
+    },
+    openAccountModal: () => {
+      dispatch(openAccountModal());
+    },
+    closeAccountModal: () => {
+      dispatch(closeAccountModal());
     },
   };
 };
