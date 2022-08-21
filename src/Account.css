@@ -45,7 +45,7 @@ i {
 }
 
 .edit-form input {
-  height: 30px;
+  height: 20px;
   border: none;
   border-bottom: 2px solid black;
 }
@@ -61,4 +61,26 @@ i {
 .edit-form button:hover,
 nav a:hover {
   background-color: rgb(100, 99, 104);
+}
+
+.address {
+  border: 1px solid black;
+  height: 10rem;
+  width: 10rem;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 2px 0;
+  margin: 1rem;
+}
+
+.address button {
+  background-color: 343a40;
+  color: edf2f4;
+  cursor: pointer;
+  padding: 3px;
+}
+
+#name {
+  font-weight: bold;
 }

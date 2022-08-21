@@ -1,14 +1,21 @@
-const { conn, User, Product, CreditCard, Category, Genre } = require("../");
+const {
+  conn,
+  User,
+  Product,
+  CreditCard,
+  Category,
+  Genre,
+  Address,
+} = require("../");
 const { USERS } = require("./seedDataUsers");
 const { CATEGORIES } = require("./seedDataCategories");
-
 const { GENRES } = require("./seedDataGenres");
 
 const syncAndSeed = async () => {
   try {
     await conn.sync({ force: true });
 
-    await User.create({
+    const lucy = await User.create({
       firstName: "Lucy",
       lastName: "Bar",
       email: "lucy_bar@gmail.com",
@@ -84,6 +91,22 @@ const syncAndSeed = async () => {
         "https://merchbar.imgix.net/product/4/1616/19226798/T830LL-1540265001-3601x3601-1540264977-007_Kendrick%20Lamar_Good%20Kid,%20M%20A%20A%20D%20City_01.jpg?quality=60&auto=compress,format&w=390&h=390",
       categoryId: albums.id,
       genreId: hipHop.id,
+    });
+    await Address.create({
+      apt: "2S",
+      street: "3333 Acme str",
+      city: "NYC",
+      state: "NY",
+      zipcode: "12345",
+      userId: lucy.id,
+    });
+    await Address.create({
+      apt: "2S",
+      street: "3333 Acme str",
+      city: "chicago",
+      state: "NY",
+      zipcode: "12345",
+      userId: lucy.id,
     });
   } catch (ex) {
     console.log(ex);
