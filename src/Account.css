@@ -33,7 +33,8 @@ i {
   cursor: pointer;
 }
 
-.edit-form {
+.edit-form,
+.address-form {
   display: flex;
   flex-direction: column;
   width: 20rem;
@@ -59,11 +60,13 @@ i {
 }
 
 .edit-form button:hover,
-nav a:hover {
+nav a:hover,
+.address-form button:hover {
   background-color: rgb(100, 99, 104);
 }
 
-.address {
+.address,
+.add-address {
   border: 1px solid black;
   height: 10rem;
   width: 10rem;
@@ -74,13 +77,36 @@ nav a:hover {
   margin: 1rem;
 }
 
-.address button {
+.address button,
+.address-form button {
   background-color: 343a40;
   color: edf2f4;
   cursor: pointer;
   padding: 3px;
+  border-radius: 5px;
+  height: 35px;
 }
 
 #name {
   font-weight: bold;
+}
+
+.add-address i {
+  font-size: 6rem;
+  color: rgb(201, 199, 199);
+  margin: auto;
+}
+
+.add-address {
+  text-align: center;
+}
+
+.address-form > * {
+  margin-top: 1rem;
+}
+
+.address-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }

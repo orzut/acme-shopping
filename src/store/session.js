@@ -72,7 +72,7 @@ export const updateUser = (auth) => {
       const token = window.localStorage.getItem("token");
       if (token) {
         auth = (
-          await axios.put("/api/sessions/", auth, {
+          await axios.put("/api/sessions", auth, {
             headers: {
               authorization: token,
             },

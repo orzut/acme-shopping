@@ -18,3 +18,11 @@ app.get("/", isLoggedIn, async (req, res, next) => {
     next(ex);
   }
 });
+
+app.post("/", isLoggedIn, async (req, res, next) => {
+  try {
+    res.send(await req.user.addAddress(req.body));
+  } catch (ex) {
+    next(ex);
+  }
+});
