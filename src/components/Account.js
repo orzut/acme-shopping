@@ -38,14 +38,6 @@ class Account extends React.Component {
     }
   }
 
-  componentDidMount() {
-    const user = this.props.session.auth;
-    console.log(user);
-    // this.setState({
-    //   firstName: this.props.s,
-    // });
-  }
-
   render() {
     const user = this.props.session.auth;
     const {

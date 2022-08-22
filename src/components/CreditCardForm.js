@@ -3,19 +3,19 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import "../Account.css";
-import { createAddress, getAddresses, deleteAddress } from "../store";
+import { createCreditCard, getWallet, deleteCreditCard } from "../store";
 import TextField from "@mui/material/TextField";
 
-class AddressForm extends React.Component {
+class CreditCardForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      apt: "",
-      street: "",
-      city: "",
-      state: "",
-      zipcode: "",
-      displayAddressForm: false,
+      nameOnCard: "",
+      number: "",
+      expirationMonth: "",
+      expirationYear: "",
+      pin: "",
+      displayForm: false,
     };
     this.save = this.save.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -24,14 +24,14 @@ class AddressForm extends React.Component {
   save(ev) {
     ev.preventDefault();
 
-    this.props.addAddress(this.state);
+    this.props.addCreditCard(this.state);
     this.setState({
-      displayAddressForm: false,
-      apt: "",
-      street: "",
-      city: "",
-      state: "",
-      zipcode: "",
+      nameOnCard: "",
+      number: "",
+      expirationMonth: "",
+      expirationYear: "",
+      pin: "",
+      displayForm: false,
     });
   }
 
@@ -40,17 +40,23 @@ class AddressForm extends React.Component {
   }
 
   componentDidMount() {
-    this.props.loadAddresses();
+    this.props.loadWallet();
   }
 
   render() {
-    const { addresses, session, deleteAddress } = this.props;
-    const { displayAddressForm, apt, street, city, state, zipcode } =
-      this.state;
+    const { creditCards, deleteCreditCard } = this.props;
+    const {
+      displayForm,
+      nameOnCard,
+      number,
+      expirationMonth,
+      expirationYear,
+      pin,
+    } = this.state;
     const { save, onChange } = this;
     return (
       <div id="account-page">
-        <h2>Your addresses</h2>
+        <h2>Your Wallet</h2>
         <div className="container">
           <nav>
             <Link to="/account">Profile</Link>
@@ -60,30 +66,30 @@ class AddressForm extends React.Component {
           </nav>
           <div className="address-container">
             <div className="add-address">
-              <HashLink to="/account/addresses#address-form">
+              <HashLink to="/account/wallet#address-form">
                 <i
                   className="fa-solid fa-plus"
-                  onClick={() => this.setState({ displayAddressForm: true })}
+                  onClick={() => this.setState({ displayForm: true })}
                 ></i>
               </HashLink>
-              <p>Add Address</p>
+              <p>Add Credit Card</p>
             </div>
-            {addresses.map((address) => {
+            {creditCards.map((creditCard) => {
               return (
-                <div key={address.id} className="address">
+                <div key={creditCard.id} className="address">
                   <div>
-                    <p id="name">
-                      {session.auth.firstName} {session.auth.lastName}
-                    </p>
+                    <p id="name">{creditCard.nameOnCard}</p>
+                    <p>***{creditCard.number.slice(12)}</p>
                     <p>
-                      {address.street}, {address.apt}
-                    </p>
-                    <p>
-                      {address.city}, {address.state}, {address.zipcode}
+                      {creditCard.expirationMonth < 10
+                        ? `0${creditCard.expirationMonth}`
+                        : creditCard.expirationMonth}
+                      /20{creditCard.expirationYear}
                     </p>
                   </div>
+
                   <i
-                    onClick={() => deleteAddress(address)}
+                    onClick={() => deleteCreditCard(creditCard)}
                     className="fa-regular fa-trash-can"
                   ></i>
                 </div>
@@ -92,64 +98,66 @@ class AddressForm extends React.Component {
           </div>
         </div>
 
-        {displayAddressForm ? (
+        {displayForm ? (
           <form onSubmit={save} className="address-form">
-            <h3 id="address-form">Add a new address</h3>
+            <h3 id="address-form">Add a new credit card</h3>
             <TextField
               required
               margin="dense"
               type="text"
-              name="street"
-              label="Street address"
+              name="nameOnCard"
+              label="Name on card"
               size="small"
               onChange={onChange}
-              value={street}
+              value={nameOnCard}
             />
             <TextField
               required
               margin="dense"
               type="text"
-              name="apt"
-              label="Apt, suite, unit"
+              name="number"
+              label="Card number"
               size="small"
               onChange={onChange}
-              value={apt}
+              value={number}
             />
 
             <TextField
               required
               margin="dense"
-              type="text"
-              name="city"
-              label="City"
+              type="number"
+              name="expirationMonth"
+              label="Expiration month"
+              min="1"
+              max="12"
               size="small"
               onChange={onChange}
-              value={city}
+              value={expirationMonth}
             />
             <TextField
               required
               margin="dense"
-              type="text"
-              name="state"
-              label="State"
+              type="number"
+              name="expirationYear"
+              label="Expiration year"
               size="small"
               onChange={onChange}
-              value={state}
+              value={expirationYear}
             />
             <TextField
               required
               margin="dense"
-              type="text"
-              name="zipcode"
-              label="Zipcode"
+              type="number"
+              name="pin"
+              label="Security code"
               size="small"
               onChange={onChange}
-              value={zipcode}
+              value={pin}
             />
             <button type="submit">Save</button>
             <button
               type="button"
-              onClick={() => this.setState({ displayAddressForm: false })}
+              onClick={() => this.setState({ displayForm: false })}
             >
               Cancel
             </button>
@@ -162,10 +170,10 @@ class AddressForm extends React.Component {
 
 const mapDispatch = (dispatch) => {
   return {
-    loadAddresses: () => dispatch(getAddresses()),
-    addAddress: (address) => dispatch(createAddress(address)),
-    deleteAddress: (address) => dispatch(deleteAddress(address)),
+    loadWallet: () => dispatch(getWallet()),
+    addCreditCard: (creditCard) => dispatch(createCreditCard(creditCard)),
+    deleteCreditCard: (creditCard) => dispatch(deleteCreditCard(creditCard)),
   };
 };
 
-export default connect((state) => state, mapDispatch)(AddressForm);
+export default connect((state) => state, mapDispatch)(CreditCardForm);

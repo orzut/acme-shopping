@@ -18,6 +18,7 @@ import Categories from "./Categories";
 import Products from "./Products";
 import Account from "./Account";
 import AddressForm from "./AddressForm";
+import CreditCardForm from "./CreditCardForm";
 
 class App extends React.Component {
   componentDidMount() {
@@ -50,6 +51,7 @@ class App extends React.Component {
           <Route path="/products/category/:id" component={Products}></Route>
           <Route path="/account" exact component={Account} />
           <Route path="/account/addresses" component={AddressForm} />
+          <Route path="/account/wallet" component={CreditCardForm} />
         </Switch>
         {session.auth.id ? (
           <Link to="/cart">Cart ({cart.lineItems.length})</Link>

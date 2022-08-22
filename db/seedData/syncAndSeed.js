@@ -27,12 +27,12 @@ const syncAndSeed = async () => {
       USERS.map((user) => User.create(user))
     );
     await CreditCard.create({
-      nameOnCard: "Moe Foo",
+      nameOnCard: "Lucy Foo",
       number: "1234123412341234",
       expirationMonth: 4,
       expirationYear: 25,
       pin: 573,
-      userId: createdUsers[3].id,
+      userId: lucy.id,
     });
 
     const [teeShirts, hoodies, albums, hats, posters, accessories] =
@@ -96,14 +96,6 @@ const syncAndSeed = async () => {
       apt: "2S",
       street: "3333 Acme str",
       city: "NYC",
-      state: "NY",
-      zipcode: "12345",
-      userId: lucy.id,
-    });
-    await Address.create({
-      apt: "2S",
-      street: "3333 Acme str",
-      city: "chicago",
       state: "NY",
       zipcode: "12345",
       userId: lucy.id,

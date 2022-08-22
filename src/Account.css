@@ -106,3 +106,10 @@ nav a:hover,
   flex-direction: row;
   flex-wrap: wrap;
 }
+
+.address i {
+  font-size: 20px;
+  position: relative;
+  bottom: 140px;
+  left: 130px;
+}
