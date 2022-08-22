@@ -1,8 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 import "../Account.css";
-import { createAddress, getAddresses } from "../store";
+import { createAddress, getAddresses, deleteAddress } from "../store";
 import TextField from "@mui/material/TextField";
 
 class AddressForm extends React.Component {
@@ -22,14 +23,8 @@ class AddressForm extends React.Component {
 
   save(ev) {
     ev.preventDefault();
-    const address = {
-      apt: this.state.apt,
-      street: this.state.street,
-      city: this.state.city,
-      state: this.state.state,
-      zipcode: this.state.zipcode,
-    };
-    this.props.addAddress(address);
+
+    this.props.addAddress(this.state);
     this.setState({
       displayAddressForm: false,
       apt: "",
@@ -49,7 +44,7 @@ class AddressForm extends React.Component {
   }
 
   render() {
-    const { addresses, session } = this.props;
+    const { addresses, session, deleteAddress } = this.props;
     const { displayAddressForm, apt, street, city, state, zipcode } =
       this.state;
     const { save, onChange } = this;
@@ -65,25 +60,30 @@ class AddressForm extends React.Component {
           </nav>
           <div className="address-container">
             <div className="add-address">
-              <i
-                className="fa-solid fa-plus"
-                onClick={() => this.setState({ displayAddressForm: true })}
-              ></i>
+              <HashLink to="/account/addresses#address-form">
+                <i
+                  className="fa-solid fa-plus"
+                  onClick={() => this.setState({ displayAddressForm: true })}
+                ></i>
+              </HashLink>
               <p>Add Address</p>
             </div>
             {addresses.map((address) => {
               return (
                 <div key={address.id} className="address">
-                  <p id="name">
-                    {session.auth.firstName} {session.auth.lastName}
-                  </p>
-                  <p>
-                    {address.street}, {address.apt}
-                  </p>
-                  <p>
-                    {address.city}, {address.state}, {address.zipcode}
-                  </p>
-                  <button>Remove</button>
+                  <div>
+                    <p id="name">
+                      {session.auth.firstName} {session.auth.lastName}
+                    </p>
+                    <p>
+                      {address.street}, {address.apt}
+                    </p>
+                    <p>
+                      {address.city}, {address.state}, {address.zipcode}
+                    </p>
+                  </div>
+
+                  <button onClick={() => deleteAddress(address)}>Remove</button>
                 </div>
               );
             })}
@@ -92,11 +92,11 @@ class AddressForm extends React.Component {
 
         {displayAddressForm ? (
           <form onSubmit={save} className="address-form">
-            <h3>Add a new address</h3>
+            <h3 id="address-form">Add a new address</h3>
             <TextField
               required
               margin="dense"
-              type="street"
+              type="text"
               name="street"
               label="Street address"
               size="small"
@@ -162,6 +162,7 @@ const mapDispatch = (dispatch) => {
   return {
     loadAddresses: () => dispatch(getAddresses()),
     addAddress: (address) => dispatch(createAddress(address)),
+    deleteAddress: (address) => dispatch(deleteAddress(address)),
   };
 };
 

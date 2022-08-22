@@ -1,8 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
+
 import "../Account.css";
 import { updateUser } from "../store";
+import TextField from "@mui/material/TextField";
 
 class Account extends React.Component {
   constructor() {
@@ -27,19 +30,20 @@ class Account extends React.Component {
     if (this.state.password !== this.state.passwordVerify) {
       alert("Password does not match");
     }
-    const user = {
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      email: this.state.email,
-      phone: this.state.phone,
-      password: this.state.password,
-    };
     try {
-      this.props.updateUser(user);
+      this.props.updateUser(this.state);
       this.setState({ displayEditForm: false });
     } catch (err) {
       alert("Please enter valid data");
     }
+  }
+
+  componentDidMount() {
+    const user = this.props.session.auth;
+    console.log(user);
+    // this.setState({
+    //   firstName: this.props.s,
+    // });
   }
 
   render() {
@@ -84,39 +88,74 @@ class Account extends React.Component {
               </tr>
             </tbody>
           </table>
-          <i
-            className="fa-solid fa-pencil"
-            onClick={() => this.setState({ displayEditForm: true })}
-          ></i>
+          <HashLink to="/account#edit-form">
+            <i
+              className="fa-solid fa-pencil"
+              onClick={() => this.setState({ displayEditForm: true })}
+            ></i>
+          </HashLink>
         </div>
         {displayEditForm ? (
-          <form className="edit-form" onSubmit={save}>
-            <label>First Name:</label>
-            <input name="firstName" value={firstName} onChange={onChange} />
-            <label>Last Name:</label>
-            <input name="lastName" value={lastName} onChange={onChange} />
-            <label>E-mail:</label>
-            <input
+          <form id="edit-form" className="edit-form" onSubmit={save}>
+            <TextField
+              required
+              margin="dense"
+              type="text"
+              name="firstName"
+              label="First name"
+              size="small"
+              onChange={onChange}
+              value={firstName}
+            />
+            <TextField
+              required
+              margin="dense"
+              type="text"
+              name="lastName"
+              label="Last name"
+              size="small"
+              onChange={onChange}
+              value={lastName}
+            />
+            <TextField
+              required
+              margin="dense"
               type="email"
               name="email"
-              value={email}
+              label="E-mail"
+              size="small"
               onChange={onChange}
+              value={email}
             />
-            <label>Phone:</label>
-            <input type="tel" name="phone" value={phone} onChange={onChange} />
-            <label>New password:</label>
-            <input
+            <TextField
+              required
+              margin="dense"
+              type="tel"
+              name="phone"
+              label="Phone"
+              size="small"
+              onChange={onChange}
+              value={phone}
+            />
+            <TextField
+              required
+              margin="dense"
               type="password"
               name="password"
-              value={password}
+              label="Password"
+              size="small"
               onChange={onChange}
+              value={password}
             />
-            <label>Repeat password:</label>
-            <input
+            <TextField
+              required
+              margin="dense"
               type="password"
               name="passwordVerify"
-              value={passwordVerify}
+              label="Repeat password"
+              size="small"
               onChange={onChange}
+              value={passwordVerify}
             />
             <button
               disabled={!firstName && !lastName && !email && !phone}
@@ -124,7 +163,10 @@ class Account extends React.Component {
             >
               Save
             </button>
-            <button onClick={() => this.setState({ displayEditForm: false })}>
+            <button
+              type="button"
+              onClick={() => this.setState({ displayEditForm: false })}
+            >
               Cancel
             </button>
           </form>

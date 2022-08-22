@@ -31,6 +31,7 @@ nav a {
 i {
   margin: 1rem 0 0 1rem;
   cursor: pointer;
+  color: 343a40;
 }
 
 .edit-form,
@@ -43,12 +44,6 @@ i {
 
 .edit-form > * {
   margin: 5px;
-}
-
-.edit-form input {
-  height: 20px;
-  border: none;
-  border-bottom: 2px solid black;
 }
 
 .edit-form button {
@@ -78,7 +73,8 @@ nav a:hover,
 }
 
 .address button,
-.address-form button {
+.address-form button,
+.edit-form button {
   background-color: 343a40;
   color: edf2f4;
   cursor: pointer;
