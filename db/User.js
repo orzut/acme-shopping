@@ -109,6 +109,18 @@ User.prototype.getCart = async function () {
   return order;
 };
 
+User.prototype.addAddress = async function (address) {
+  return await conn.models.address.create({ ...address, userId: this.id });
+};
+
+User.prototype.addCreditCard = async function (creditCard) {
+  console.log(conn.models);
+  return await conn.models.creditCard.create({
+    ...creditCard,
+    userId: this.id,
+  });
+};
+
 User.authenticate = async function (credentials) {
   const user = await this.findOne({
     where: {

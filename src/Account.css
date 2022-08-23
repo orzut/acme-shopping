@@ -31,9 +31,11 @@ nav a {
 i {
   margin: 1rem 0 0 1rem;
   cursor: pointer;
+  color: 343a40;
 }
 
-.edit-form {
+.edit-form,
+.address-form {
   display: flex;
   flex-direction: column;
   width: 20rem;
@@ -42,12 +44,6 @@ i {
 
 .edit-form > * {
   margin: 5px;
-}
-
-.edit-form input {
-  height: 30px;
-  border: none;
-  border-bottom: 2px solid black;
 }
 
 .edit-form button {
@@ -59,6 +55,61 @@ i {
 }
 
 .edit-form button:hover,
-nav a:hover {
+nav a:hover,
+.address-form button:hover {
   background-color: rgb(100, 99, 104);
+}
+
+.address,
+.add-address {
+  border: 1px solid black;
+  height: 10rem;
+  width: 10rem;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 2px 0;
+  margin: 1rem;
+}
+
+.address button,
+.address-form button,
+.edit-form button {
+  background-color: 343a40;
+  color: edf2f4;
+  cursor: pointer;
+  padding: 3px;
+  border-radius: 5px;
+  height: 35px;
+}
+
+#name {
+  font-weight: bold;
+}
+
+.add-address i {
+  font-size: 6rem;
+  color: rgb(201, 199, 199);
+  margin: auto;
+}
+
+.add-address {
+  text-align: center;
+}
+
+.address-form > * {
+  margin-top: 1rem;
+}
+
+.address-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.address i {
+  font-size: 20px;
+  position: relative;
+  bottom: 140px;
+  left: 130px;
 }
