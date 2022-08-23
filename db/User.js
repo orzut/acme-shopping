@@ -97,12 +97,28 @@ User.prototype.getCart = async function () {
     ],
   });
   if (!order) {
-    order = await conn.models.order.create({ userId: this.id });
+    const date = new Date();
+    order = await conn.models.order.create({
+      userId: this.id,
+      orderDate: date,
+    });
     order = await conn.models.order.findByPk(order.id, {
       include: [conn.models.lineItem],
     });
   }
   return order;
+};
+
+User.prototype.addAddress = async function (address) {
+  return await conn.models.address.create({ ...address, userId: this.id });
+};
+
+User.prototype.addCreditCard = async function (creditCard) {
+  console.log(conn.models);
+  return await conn.models.creditCard.create({
+    ...creditCard,
+    userId: this.id,
+  });
 };
 
 User.authenticate = async function (credentials) {

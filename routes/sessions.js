@@ -20,3 +20,11 @@ app.post("/", async (req, res, next) => {
 app.get("/", isLoggedIn, async (req, res, next) => {
   res.send(req.user);
 });
+
+app.put("/", isLoggedIn, async (req, res, next) => {
+  try {
+    res.send(await req.user.update(req.body));
+  } catch (ex) {
+    next(ex);
+  }
+});

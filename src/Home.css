@@ -18,6 +18,7 @@
 .products-list {
   display: flex;
   justify-content: space-around;
+  margin: 1rem;
 }
 
 .product p {
@@ -28,6 +29,11 @@
 
 .product img {
   height: 200px;
+}
+
+.product {
+  text-decoration-color: black;
+  margin: 0.5rem;
 }
 
 .see-more a {

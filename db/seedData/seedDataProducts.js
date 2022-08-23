@@ -24,7 +24,6 @@ const seedDataProducts = async () => {
 
     await Promise.all(
       products.map(product => {
-        console.log(product)
         return Product.create({
           name: product.Name,
           cost: product.Cost,

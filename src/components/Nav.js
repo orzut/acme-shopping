@@ -2,8 +2,15 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import AccountModal from "./AccountModal";
-import { logout } from "./store";
-import "./Nav.css";
+import CartModal from "./CartModal";
+import {
+  logout,
+  openAccountModal,
+  emptyCart,
+  // closeAccountModal,
+  openCartModal,
+} from "../store";
+import "../Nav.css";
 
 class Nav extends React.Component {
   constructor() {
@@ -12,27 +19,27 @@ class Nav extends React.Component {
       accountModalIsOpen: false,
     };
     this.onClickUser = this.onClickUser.bind(this);
-    this.closeAccountModal = this.closeAccountModal.bind(this);
+    //this.closeAccountModal = this.closeAccountModal.bind(this);
     this.onLogout = this.onLogout.bind(this);
   }
 
   onClickUser() {
     if (this.props.session.auth.id) {
-      console.log(this.props.match.params.view);
       if (this.props.match.params.view !== "account") {
         this.props.history.push("/account");
       }
     } else {
-      this.setState({ accountModalIsOpen: true });
+      console.log("this ran");
+      this.props.openAccountModal();
+      //this.setState({ accountModalIsOpen: true });
     }
   }
 
-  closeAccountModal() {
-    this.setState({ accountModalIsOpen: false });
-  }
+  // closeAccountModal() {
+  //   this.setState({ accountModalIsOpen: false });
+  // }
 
   onLogout() {
-    console.log(this.props.match);
     this.props.logout();
     if (this.props.match.params.view === "account") {
       this.props.history.push("/");
@@ -40,20 +47,29 @@ class Nav extends React.Component {
   }
 
   render() {
-    const { session, genres, categories } = this.props;
-    const { accountModalIsOpen } = this.state;
-    const { onClickUser, closeAccountModal, onLogout } = this;
+    const {
+      session,
+      genres,
+      categories,
+      openAccountModal,
+      openCartModal,
+      cart,
+    } = this.props;
+    //const { accountModalIsOpen } = this.state;
+    const { onClickUser, onLogout } = this;
     return (
       <div className="Nav">
-        {accountModalIsOpen ? (
-          <AccountModal closeAccountModal={closeAccountModal} />
-        ) : null}
+        {session.accountModalIsOpen ? <AccountModal /> : null}
+        {cart.cartModalIsOpen ? <CartModal /> : null}
         <div id="header">
           <h1>Grace Shopper</h1>
           <div>
             <i className="fa-solid fa-magnifying-glass"></i>
             <i className="fa-solid fa-user" onClick={onClickUser}></i>
-            <i className="fa-solid fa-cart-shopping"></i>
+            <i
+              className="fa-solid fa-cart-shopping"
+              onClick={openCartModal}
+            ></i>
             {session.auth.id && <button onClick={onLogout}>Logout</button>}
           </div>
         </div>
@@ -102,6 +118,16 @@ const mapDispatch = (dispatch) => {
   return {
     logout: () => {
       dispatch(logout());
+      dispatch(emptyCart());
+    },
+    openAccountModal: () => {
+      dispatch(openAccountModal());
+    },
+    // closeAccountModal: () => {
+    //   dispatch(closeAccountModal());
+    // },
+    openCartModal: () => {
+      dispatch(openCartModal());
     },
   };
 };

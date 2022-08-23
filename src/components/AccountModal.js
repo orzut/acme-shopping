@@ -1,8 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import "./AccountModal.css";
+import "../AccountModal.css";
 import SignInForm from "./SignInForm";
 import SignUpForm from "./SignUpForm";
+import { closeAccountModal } from "../store";
 
 class AccountModal extends React.Component {
   constructor() {
@@ -22,7 +23,7 @@ class AccountModal extends React.Component {
     const { isFlipped } = this.state;
     const { flipModal } = this;
     return (
-      <div>
+      <div id="accountModal">
         <div className="modalBackground" onClick={() => closeAccountModal()} />
         <div className="modal">
           <div className={isFlipped ? "isFlipped sides" : "sides"}>
@@ -35,4 +36,12 @@ class AccountModal extends React.Component {
   }
 }
 
-export default connect((state) => state)(AccountModal);
+const mapDispatch = (dispatch) => {
+  return {
+    closeAccountModal: () => {
+      dispatch(closeAccountModal());
+    },
+  };
+};
+
+export default connect((state) => state, mapDispatch)(AccountModal);

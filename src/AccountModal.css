@@ -1,4 +1,4 @@
-.modalBackground {
+#accountModal .modalBackground {
   position: absolute;
   height: 100vh;
   width: 100vw;
@@ -9,15 +9,15 @@
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-.modal {
+#accountModal .modal {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 350px;
+  width: 450px;
   height: 450px;
   /* background: white; */
-  color: white;
+  /* color: white; */
   perspective: 800px;
   z-index: 10;
   border-radius: 16px;
@@ -27,7 +27,6 @@
 .sides {
   width: 100%;
   height: 100%;
-
   transition: transform 1.5s;
   transform-style: preserve-3d;
   position: relative;
