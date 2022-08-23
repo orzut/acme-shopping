@@ -48,17 +48,20 @@ class App extends React.Component {
           <Route path="/genres" exact>
             <Genres />
           </Route>
-          <Route path="/products/genre/:id" component={Products}></Route>
+          {/* <Route path="/products/genre/:id" component={Products}></Route> */}
           <Route path="/categories" exact>
             <Categories />
           </Route>
-          <Route path="/products/category/:id" component={Products}></Route>
+
           <Route path="/account" exact component={Account} />
           <Route path="/account/addresses" component={AddressForm} />
           <Route path="/account/wallet" component={CreditCardForm} />
           <Route path="/account/orders" component={OrdersHistory} />
         </Switch>
-
+        <Route
+          path={["/products/category/:id", "/products/genre/:id"]}
+          component={Products}
+        ></Route>
         {session.auth.id ? (
           <Fragment>
             <Route path="/cart" component={CartModal} />
