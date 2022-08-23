@@ -100,7 +100,7 @@ class Nav extends React.Component {
                 return (
                   <Link
                     key={category.id}
-                    to={`/products/categories/${category.id}`}
+                    to={`/products/category/${category.id}`}
                   >
                     {category.name}
                   </Link>
