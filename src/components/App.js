@@ -21,6 +21,7 @@ import Account from "./Account";
 import AddressForm from "./AddressForm";
 import CreditCardForm from "./CreditCardForm";
 import CartModal from "./CartModal";
+import OrdersHistory from "./OrdersHistory";
 
 class App extends React.Component {
   componentDidMount() {
@@ -55,6 +56,7 @@ class App extends React.Component {
           <Route path="/account" exact component={Account} />
           <Route path="/account/addresses" component={AddressForm} />
           <Route path="/account/wallet" component={CreditCardForm} />
+          <Route path="/account/orders" component={OrdersHistory} />
         </Switch>
 
         {session.auth.id ? (

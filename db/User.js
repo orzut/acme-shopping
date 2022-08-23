@@ -1,6 +1,5 @@
 const conn = require("./conn");
 const { Sequelize } = conn;
-
 const { STRING, INTEGER, ENUM } = Sequelize;
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -114,11 +113,21 @@ User.prototype.addAddress = async function (address) {
 };
 
 User.prototype.addCreditCard = async function (creditCard) {
-  console.log(conn.models);
   return await conn.models.creditCard.create({
     ...creditCard,
     userId: this.id,
   });
+};
+
+User.prototype.getOrders = async function () {
+  const orders = await conn.models.order.findAll({
+    where: {
+      userId: this.id,
+    },
+    include: [conn.models.lineItem],
+  });
+  console.log(orders);
+  return orders;
 };
 
 User.authenticate = async function (credentials) {

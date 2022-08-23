@@ -8,6 +8,7 @@ import genres from "./genres";
 import products from "./products";
 import addresses from "./addresses";
 import creditCards from "./creditCards";
+import orders from "./orders";
 
 const reducer = combineReducers({
   session,
@@ -17,6 +18,7 @@ const reducer = combineReducers({
   products,
   addresses,
   creditCards,
+  orders,
 });
 
 const store = createStore(reducer, applyMiddleware(thunk, logger));
@@ -29,3 +31,4 @@ export * from "./genres";
 export * from "./products";
 export * from "./addresses";
 export * from "./creditCards";
+export * from "./orders";
