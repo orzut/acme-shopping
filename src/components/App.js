@@ -7,6 +7,7 @@ import {
   fetchCategories,
   fetchGenres,
   fetchProducts,
+  loadLocalCart,
 } from "../store";
 import { Link, Route, Switch } from "react-router-dom";
 import SignIn from "./SignIn";
@@ -19,6 +20,7 @@ import Products from "./Products";
 import Account from "./Account";
 import AddressForm from "./AddressForm";
 import CreditCardForm from "./CreditCardForm";
+import CartModal from "./CartModal";
 
 class App extends React.Component {
   componentDidMount() {
@@ -26,6 +28,7 @@ class App extends React.Component {
     this.props.loadCategories();
     this.props.loadGenres();
     this.props.loadProducts();
+    this.props.loadLocalCart();
   }
   componentDidUpdate(prevProps) {
     if (!prevProps.session.auth.id && this.props.session.auth.id) {
@@ -53,12 +56,10 @@ class App extends React.Component {
           <Route path="/account/addresses" component={AddressForm} />
           <Route path="/account/wallet" component={CreditCardForm} />
         </Switch>
-        {session.auth.id ? (
-          <Link to="/cart">Cart ({cart.lineItems.length})</Link>
-        ) : null}
+
         {session.auth.id ? (
           <Fragment>
-            <Route path="/cart" component={Cart} />
+            <Route path="/cart" component={CartModal} />
           </Fragment>
         ) : null}
       </main>
@@ -73,9 +74,16 @@ const mapDispatch = (dispatch) => {
     loadCategories: () => dispatch(fetchCategories()),
     loadGenres: () => dispatch(fetchGenres()),
     loadProducts: () => dispatch(fetchProducts()),
+    loadLocalCart: () => dispatch(loadLocalCart()),
   };
 };
 const mapStateToProps = (state) => {
   return state;
 };
 export default connect(mapStateToProps, mapDispatch)(App);
+
+// {session.auth.id ? (
+//   <Link to="/cart">Cart ({cart.cartData.lineItems.length})</Link>
+// ) : null}
+
+// <Route path="/cart" component={Cart} />

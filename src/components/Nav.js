@@ -2,7 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import AccountModal from "./AccountModal";
-import { logout, openAccountModal, closeAccountModal } from "../store";
+import CartModal from "./CartModal";
+import {
+  logout,
+  openAccountModal,
+  emptyCart,
+  // closeAccountModal,
+  openCartModal,
+} from "../store";
 import "../Nav.css";
 
 class Nav extends React.Component {
@@ -40,18 +47,29 @@ class Nav extends React.Component {
   }
 
   render() {
-    const { session, genres, categories, openAccountModal } = this.props;
+    const {
+      session,
+      genres,
+      categories,
+      openAccountModal,
+      openCartModal,
+      cart,
+    } = this.props;
     //const { accountModalIsOpen } = this.state;
     const { onClickUser, onLogout } = this;
     return (
       <div className="Nav">
         {session.accountModalIsOpen ? <AccountModal /> : null}
+        {cart.cartModalIsOpen ? <CartModal /> : null}
         <div id="header">
           <h1>Grace Shopper</h1>
           <div>
             <i className="fa-solid fa-magnifying-glass"></i>
             <i className="fa-solid fa-user" onClick={onClickUser}></i>
-            <i className="fa-solid fa-cart-shopping"></i>
+            <i
+              className="fa-solid fa-cart-shopping"
+              onClick={openCartModal}
+            ></i>
             {session.auth.id && <button onClick={onLogout}>Logout</button>}
           </div>
         </div>
@@ -100,12 +118,16 @@ const mapDispatch = (dispatch) => {
   return {
     logout: () => {
       dispatch(logout());
+      dispatch(emptyCart());
     },
     openAccountModal: () => {
       dispatch(openAccountModal());
     },
-    closeAccountModal: () => {
-      dispatch(closeAccountModal());
+    // closeAccountModal: () => {
+    //   dispatch(closeAccountModal());
+    // },
+    openCartModal: () => {
+      dispatch(openCartModal());
     },
   };
 };
