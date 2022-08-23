@@ -1,14 +1,5 @@
-const { Genre } = require("../Genre");
+const { Genre } = require('../Genre')
 
-const GENRES = [
-  "Rock",
-  "Pop",
-  "Hip-Hop",
-  "Country",
-  "Electronic",
-  "Metal",
-  "R&B"
-];
+const GENRES = ['Broadway', 'Country', 'EDM', 'Hard Rock', 'Jazz/Blues', 'Pop']
 
-
-module.exports = { GENRES };
+module.exports = { GENRES }

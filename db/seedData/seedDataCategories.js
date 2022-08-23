@@ -1,12 +1,5 @@
-const { Category } = require("../Category");
+const { Category } = require('../Category')
 
-const CATEGORIES = [
-  "Tee Shirts",
-  "Hoodies",
-  "Albums",
-  "Hats",
-  "Posters",
-  "Accessories",
-];
+const CATEGORIES = ['Accessories', 'CD', 'Shirts', 'Sweatshirts', 'Vinyl']
 
-module.exports = { CATEGORIES };
+module.exports = { CATEGORIES }
