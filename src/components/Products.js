@@ -3,11 +3,23 @@ import { connect } from "react-redux";
 import ProductList from "./ProductList";
 
 const Products = ({ byCategories, byGenres, match }) => {
+<<<<<<< HEAD
   console.log(byCategories);
   
   let products = match.path === "/products/genre/:id" ? byGenres : byCategories;
   
   return <ProductList products={products} />;
+=======
+  return (
+    <div>
+      {(match.path === "/products/genre/:id" ? byGenres : byCategories).map(
+        (product) => {
+          return <li key={product.id}>{product.name}</li>;
+        }
+      )}
+    </div>
+  );
+>>>>>>> origin/main
 };
 
 const mapStateToProps = ({ products, categories, genres }, { match }) => {

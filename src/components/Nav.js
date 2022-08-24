@@ -41,7 +41,6 @@ class Nav extends React.Component {
         this.props.history.push("/account");
       }
     } else {
-      console.log("this ran");
       this.props.openAccountModal();
       //this.setState({ accountModalIsOpen: true });
     }
