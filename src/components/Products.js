@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 
 const Products = ({ byCategories, byGenres, match }) => {
-  console.log(byCategories);
   return (
     <div>
       {(match.path === "/products/genre/:id" ? byGenres : byCategories).map(

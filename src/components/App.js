@@ -22,6 +22,7 @@ import AddressForm from "./AddressForm";
 import CreditCardForm from "./CreditCardForm";
 import CartModal from "./CartModal";
 import OrdersHistory from "./OrdersHistory";
+import ProductsInfo from "./ProductsInfo";
 
 class App extends React.Component {
   componentDidMount() {
@@ -48,7 +49,6 @@ class App extends React.Component {
           <Route path="/genres" exact>
             <Genres />
           </Route>
-          {/* <Route path="/products/genre/:id" component={Products}></Route> */}
           <Route path="/categories" exact>
             <Categories />
           </Route>
@@ -57,6 +57,8 @@ class App extends React.Component {
           <Route path="/account/addresses" component={AddressForm} />
           <Route path="/account/wallet" component={CreditCardForm} />
           <Route path="/account/orders" component={OrdersHistory} />
+          <Route path="/account/products-info" component={ProductsInfo} />
+          {/* <Route path='/account/users-info' component={UsersInfo} /> */}
         </Switch>
         <Route
           path={["/products/category/:id", "/products/genre/:id"]}
