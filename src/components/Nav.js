@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import AccountModal from "./AccountModal";
 import CartModal from "./CartModal";
 import {
@@ -11,6 +11,18 @@ import {
   openCartModal,
 } from "../store";
 import "../Nav.css";
+
+
+function SearchIcon() {
+  let history = useHistory();
+  
+  function onClickSearch() {
+    history.push("/search");
+  }
+  
+  return <i className="fa-solid fa-magnifying-glass" onClick={onClickSearch} />
+}
+
 
 class Nav extends React.Component {
   constructor() {
@@ -64,7 +76,7 @@ class Nav extends React.Component {
         <div id="header">
           <h1>Grace Shopper</h1>
           <div>
-            <i className="fa-solid fa-magnifying-glass"></i>
+            <SearchIcon />
             <i className="fa-solid fa-user" onClick={onClickUser}></i>
             <i
               className="fa-solid fa-cart-shopping"

@@ -22,6 +22,7 @@ import AddressForm from "./AddressForm";
 import CreditCardForm from "./CreditCardForm";
 import CartModal from "./CartModal";
 import OrdersHistory from "./OrdersHistory";
+import Search from "./Search";
 
 class App extends React.Component {
   componentDidMount() {
@@ -51,6 +52,10 @@ class App extends React.Component {
           {/* <Route path="/products/genre/:id" component={Products}></Route> */}
           <Route path="/categories" exact>
             <Categories />
+          </Route>
+          
+          <Route path="/search" exact>
+            <Search />
           </Route>
 
           <Route path="/account" exact component={Account} />
