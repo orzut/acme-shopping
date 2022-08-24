@@ -1,10 +1,24 @@
 import axios from "axios";
 
 const SET_PRODUCTS = "SET_PRODUCTS";
+const UPDATE_PRODUCT = "UPDATE_PRODUCT";
+const DELETE_PRODUCT = "DELETE_PRODUCT";
+const ADD_PRODUCT = "ADD_PRODUCT";
 
 const products = (state = [], action) => {
   if (action.type === SET_PRODUCTS) {
     return action.products;
+  }
+  if (action.type === ADD_PRODUCT) {
+    return [...state, action.product];
+  }
+  if (action.type === DELETE_PRODUCT) {
+    return state.filter((product) => product.id !== action.product.id);
+  }
+  if (action.type === UPDATE_PRODUCT) {
+    return state.map((product) =>
+      product.id === action.product.id ? action.product : product
+    );
   }
   return state;
 };
@@ -14,6 +28,55 @@ export const fetchProducts = () => {
     try {
       const products = (await axios.get("/api/products")).data;
       dispatch({ type: SET_PRODUCTS, products });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const createProduct = (product) => {
+  return async (dispatch) => {
+    try {
+      product = (
+        await axios.post("/api/products", product, {
+          headers: {
+            authorization: token,
+          },
+        })
+      ).data;
+      dispatch({ type: ADD_PRODUCT, product });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const deleteProduct = (product) => {
+  return async (dispatch) => {
+    try {
+      await axios.delete(`/api/products/${product.id}`, {
+        headers: {
+          authorization: window.localStorage.getItem("token"),
+        },
+      });
+      dispatch({ type: DELETE_PRODUCT, product });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const updateProduct = (product) => {
+  return async (dispatch) => {
+    try {
+      product = (
+        await axios.put(`/api/addresses/${product.id}`, product, {
+          headers: {
+            authorization: window.localStorage.getItem("token"),
+          },
+        })
+      ).data;
+      dispatch({ type: UPDATE_PRODUCT, product });
     } catch (err) {
       console.log(err);
     }

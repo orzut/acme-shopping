@@ -23,6 +23,10 @@ nav a {
   display: flex;
 }
 
+.personal-info {
+  border-collapse: collapse;
+}
+
 .personal-info td {
   border: 1px solid black;
   padding: 1rem;
@@ -112,4 +116,42 @@ nav a:hover,
   position: relative;
   bottom: 140px;
   left: 130px;
+}
+
+.products-table {
+  display: grid;
+  border-collapse: collapse;
+  grid-template-columns: 1fr 6fr 3fr 3fr 2fr 1fr 1fr 1fr;
+}
+
+.products-table thead,
+.products-table tbody,
+.products-table tr {
+  display: contents;
+}
+
+.products-table th,
+.products-table td {
+  padding: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.products-table th {
+  position: sticky;
+  top: 0;
+  padding: 10px;
+  margin: 0;
+  background-color: 343a40;
+  color: edf2f4;
+}
+
+.products-table tr:nth-child(even) td {
+  background: rgb(228, 226, 226);
+}
+
+#admin-nav {
+  position: sticky;
+  top: 20px;
 }

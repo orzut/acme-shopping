@@ -15,7 +15,6 @@ app.post("/", isLoggedIn, async (req, res, next) => {
 
 app.put("/cart", isLoggedIn, async (req, res, next) => {
   try {
-    console.log(req.body);
     res.send(await req.user.addToCart(req.body));
   } catch (ex) {
     next(ex);
@@ -32,7 +31,6 @@ app.get("/cart", isLoggedIn, async (req, res, next) => {
 
 app.get("/", isLoggedIn, async (req, res, next) => {
   try {
-    console.log(req.user);
     res.send(await req.user.getOrders());
   } catch (ex) {
     next(ex);
