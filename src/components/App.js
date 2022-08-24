@@ -22,11 +22,8 @@ import AddressForm from "./AddressForm";
 import CreditCardForm from "./CreditCardForm";
 import CartModal from "./CartModal";
 import OrdersHistory from "./OrdersHistory";
-<<<<<<< HEAD
-import Search from "./Search";
-=======
 import ProductsInfo from "./ProductsInfo";
->>>>>>> origin/main
+import Search from "./Search";
 
 class App extends React.Component {
   componentDidMount() {
