@@ -15,6 +15,7 @@ class OrdersHistory extends React.Component {
     this.props.loadOrders();
   }
   render() {
+    const { orders } = this.props;
     return (
       <div id="account-page">
         <h2>Your Purchases</h2>
@@ -25,7 +26,24 @@ class OrdersHistory extends React.Component {
             <Link to="/account/wallet">Wallet</Link>
             <Link to="/account/orders">Purchases</Link>
           </nav>
-          <div></div>
+          <ol>
+            {orders.map((order) => {
+              return (
+                <li key={order.id}>
+                  <p>{order.orderDate}</p>
+                  <ol>
+                    {order.lineItems.map((lineItem) => {
+                      return (
+                        <li key={lineItem.id}>
+                          {lineItem.product.name} {lineItem.quantity}
+                        </li>
+                      );
+                    })}
+                  </ol>
+                </li>
+              );
+            })}
+          </ol>
         </div>
       </div>
     );

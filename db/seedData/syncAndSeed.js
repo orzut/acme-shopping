@@ -3,15 +3,12 @@ const {
   User,
   Product,
   CreditCard,
-  Category,
-  Genre,
   Address,
   Order,
   LineItem,
 } = require("../");
 const { USERS } = require("./seedDataUsers");
-const { CATEGORIES } = require("./seedDataCategories");
-const { GENRES } = require("./seedDataGenres");
+
 const { seedDataProducts } = require("./seedDataProducts");
 
 const syncAndSeed = async () => {
@@ -27,7 +24,7 @@ const syncAndSeed = async () => {
       email: "lucy_bar@gmail.com",
       password: "lucy_pw",
       phone: "123-456-7890",
-      userType: "admin",
+      userType: "user",
     });
     const createdUsers = await Promise.all(
       USERS.map((user) => User.create(user))
@@ -51,41 +48,46 @@ const syncAndSeed = async () => {
     });
 
     const date = new Date();
-    const lucyCart = await Order.create({
+    const lucyCart1 = await Order.create({
       userId: lucy.id,
       orderDate: date,
+      isCart: true,
     });
-
-    await LineItem.create({
-      quantity: 5,
-      productId: metallica.id,
-      orderId: lucyCart.id,
-    });
-    await LineItem.create({
-      quantity: 5,
-      productId: smashingPumpkins.id,
-      orderId: lucyCart.id,
+    const lucyCart2 = await Order.create({
+      userId: lucy.id,
+      orderDate: date,
+      isCart: true,
     });
     await LineItem.create({
       quantity: 5,
-      productId: hendrix.id,
-      orderId: lucyCart.id,
+      productId: 1,
+      orderId: lucyCart1.id,
     });
     await LineItem.create({
-      quantity: 5,
-      productId: pinkFloyd.id,
-      orderId: lucyCart.id,
+      quantity: 2,
+      productId: 3,
+      orderId: lucyCart1.id,
     });
     await LineItem.create({
-      quantity: 5,
-      productId: nsync.id,
-      orderId: lucyCart.id,
+      quantity: 3,
+      productId: 7,
+      orderId: lucyCart2.id,
     });
     await LineItem.create({
-      quantity: 5,
-      productId: kendrickLamar.id,
-      orderId: lucyCart.id,
+      quantity: 1,
+      productId: 6,
+      orderId: lucyCart2.id,
     });
+    // await LineItem.create({
+    //   quantity: 5,
+    //   productId: nsync.id,
+    //   orderId: lucyCart.id,
+    // });
+    // await LineItem.create({
+    //   quantity: 5,
+    //   productId: kendrickLamar.id,
+    //   orderId: lucyCart.id,
+    // });
   } catch (ex) {
     console.log(ex);
   }
