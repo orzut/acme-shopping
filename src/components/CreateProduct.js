@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import "../Account.css";
 import { createProduct, updateProduct } from "../store";
-import TextField from "@mui/material/TextField";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
+import {
+  TextField,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
 
 class CreateProduct extends React.Component {
   constructor() {
@@ -37,6 +39,17 @@ class CreateProduct extends React.Component {
       cost: "",
       categoryId: "",
       genreId: "",
+    });
+  }
+
+  componentDidMount() {
+    this.el.addEventListener("change", (ev) => {
+      const file = ev.target.files[0];
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        this.setState({ image: reader.result });
+      });
+      reader.readAsDataURL(file);
     });
   }
 
@@ -121,7 +134,11 @@ class CreateProduct extends React.Component {
                 onChange={onChange}
                 value={cost}
               />
-
+              <input
+                className="img-upload"
+                type="file"
+                ref={(el) => (this.el = el)}
+              />
               <button className="create-btn" type="submit">
                 Add product
               </button>

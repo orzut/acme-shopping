@@ -12,9 +12,6 @@ class UsersInfo extends React.Component {
   setAdmin(user) {
     user.userType = "admin";
     this.props.updateUser(user);
-    // alert(
-    //   `${user.firstName} ${user.lastName} has been set as an administrator`
-    // );
   }
   componentDidMount() {
     this.props.loadUsers();

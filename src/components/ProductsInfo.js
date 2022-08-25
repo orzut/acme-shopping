@@ -3,19 +3,21 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import "../Account.css";
 import { updateProduct, deleteProduct } from "../store";
-import Modal from "@mui/material/Modal";
+import EditProduct from "./EditProduct";
 
 class ProductsInfo extends React.Component {
   constructor() {
     super();
     this.state = {
       openModal: false,
+      product: {},
     };
     this.handleClose = this.handleClose.bind(this);
   }
   handleClose() {
     this.setState({ openModal: false });
   }
+
   render() {
     let { products, session, categories, genres, deleteProduct } = this.props;
     products = products.slice(0, 50);
@@ -66,7 +68,12 @@ class ProductsInfo extends React.Component {
 
                     <td>
                       <i
-                        onClick={() => this.setState({ openModal: true })}
+                        onClick={() =>
+                          this.setState({
+                            openModal: true,
+                            product: product,
+                          })
+                        }
                         className="fa-solid fa-pencil"
                       ></i>
                     </td>
@@ -81,12 +88,25 @@ class ProductsInfo extends React.Component {
               })}
             </tbody>
           </table>
-          {/* <Modal open={this.state.openModal} onClose={this.handleClose}></Modal> */}
+          <EditProduct
+            product={this.state.product}
+            open={this.state.openModal}
+            onClose={this.handleClose}
+          />
         </div>
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    categories: state.categories || [],
+    genres: state.genres || [],
+    products: state.products || [],
+    session: state.session,
+  };
+};
 
 const mapDispatch = (dispatch) => {
   return {
@@ -95,4 +115,4 @@ const mapDispatch = (dispatch) => {
   };
 };
 
-export default connect((state) => state, mapDispatch)(ProductsInfo);
+export default connect(mapStateToProps, mapDispatch)(ProductsInfo);

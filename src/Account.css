@@ -122,7 +122,6 @@ nav a:hover,
   display: grid;
   border-collapse: collapse;
   grid-template-columns: 1fr 6fr 3fr 3fr 2fr 1fr 1fr 1fr;
-  padding: 1rem;
 }
 
 .products-table thead,
@@ -168,4 +167,9 @@ nav a:hover,
   display: grid;
   border-collapse: collapse;
   grid-template-columns: 1fr 2fr 2fr 4fr 3fr 2fr 2fr;
+}
+
+.img-upload {
+  margin: 8px 0px 8px 0;
+  background-color: white;
 }

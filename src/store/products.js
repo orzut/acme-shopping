@@ -71,7 +71,7 @@ export const updateProduct = (product) => {
   return async (dispatch) => {
     try {
       product = (
-        await axios.put(`/api/addresses/${product.id}`, product, {
+        await axios.put(`/api/products/${product.id}`, product, {
           headers: {
             authorization: window.localStorage.getItem("token"),
           },
