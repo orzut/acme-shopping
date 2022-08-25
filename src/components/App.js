@@ -24,6 +24,7 @@ import CartModal from "./CartModal";
 import OrdersHistory from "./OrdersHistory";
 import ProductsInfo from "./ProductsInfo";
 import Search from "./Search";
+import ProductModal from "./ProductModal";
 
 class App extends React.Component {
   componentDidMount() {
@@ -39,7 +40,7 @@ class App extends React.Component {
     }
   }
   render() {
-    const { session, logout, cart } = this.props;
+    const { session, logout, cart, productModal } = this.props;
     return (
       <main>
         <Route path="/:view?" component={Nav} />
@@ -53,11 +54,10 @@ class App extends React.Component {
           <Route path="/categories" exact>
             <Categories />
           </Route>
-          
+
           <Route path="/search" exact>
             <Search />
           </Route>
-
           <Route path="/account" exact component={Account} />
           <Route path="/account/addresses" component={AddressForm} />
           <Route path="/account/wallet" component={CreditCardForm} />
@@ -74,6 +74,7 @@ class App extends React.Component {
             <Route path="/cart" component={CartModal} />
           </Fragment>
         ) : null}
+        {productModal.productModalIsOpen ? <ProductModal /> : null}
       </main>
     );
   }

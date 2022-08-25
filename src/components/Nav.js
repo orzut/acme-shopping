@@ -12,17 +12,15 @@ import {
 } from "../store";
 import "../Nav.css";
 
-
 function SearchIcon() {
   let history = useHistory();
-  
+
   function onClickSearch() {
     history.push("/search");
   }
-  
-  return <i className="fa-solid fa-magnifying-glass" onClick={onClickSearch} />
-}
 
+  return <i className="fa-solid fa-magnifying-glass" onClick={onClickSearch} />;
+}
 
 class Nav extends React.Component {
   constructor() {
@@ -31,7 +29,6 @@ class Nav extends React.Component {
       accountModalIsOpen: false,
     };
     this.onClickUser = this.onClickUser.bind(this);
-    //this.closeAccountModal = this.closeAccountModal.bind(this);
     this.onLogout = this.onLogout.bind(this);
   }
 
@@ -42,13 +39,8 @@ class Nav extends React.Component {
       }
     } else {
       this.props.openAccountModal();
-      //this.setState({ accountModalIsOpen: true });
     }
   }
-
-  // closeAccountModal() {
-  //   this.setState({ accountModalIsOpen: false });
-  // }
 
   onLogout() {
     this.props.logout();
@@ -66,7 +58,6 @@ class Nav extends React.Component {
       openCartModal,
       cart,
     } = this.props;
-    //const { accountModalIsOpen } = this.state;
     const { onClickUser, onLogout } = this;
     return (
       <div className="Nav">
@@ -134,9 +125,6 @@ const mapDispatch = (dispatch) => {
     openAccountModal: () => {
       dispatch(openAccountModal());
     },
-    // closeAccountModal: () => {
-    //   dispatch(closeAccountModal());
-    // },
     openCartModal: () => {
       dispatch(openCartModal());
     },

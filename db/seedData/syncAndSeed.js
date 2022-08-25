@@ -55,37 +55,6 @@ const syncAndSeed = async () => {
       userId: lucy.id,
       orderDate: date,
     });
-
-    // await LineItem.create({
-    //   quantity: 5,
-    //   productId: metallica.id,
-    //   orderId: lucyCart.id,
-    // });
-    // await LineItem.create({
-    //   quantity: 5,
-    //   productId: smashingPumpkins.id,
-    //   orderId: lucyCart.id,
-    // });
-    // await LineItem.create({
-    //   quantity: 5,
-    //   productId: hendrix.id,
-    //   orderId: lucyCart.id,
-    // });
-    // await LineItem.create({
-    //   quantity: 5,
-    //   productId: pinkFloyd.id,
-    //   orderId: lucyCart.id,
-    // });
-    // await LineItem.create({
-    //   quantity: 5,
-    //   productId: nsync.id,
-    //   orderId: lucyCart.id,
-    // });
-    // await LineItem.create({
-    //   quantity: 5,
-    //   productId: kendrickLamar.id,
-    //   orderId: lucyCart.id,
-    // });
   } catch (ex) {
     console.log(ex);
   }
