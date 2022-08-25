@@ -23,6 +23,8 @@ import CreditCardForm from "./CreditCardForm";
 import CartModal from "./CartModal";
 import OrdersHistory from "./OrdersHistory";
 import ProductsInfo from "./ProductsInfo";
+import CreateProduct from "./CreateProduct";
+import UsersInfo from "./UsersInfo";
 import Search from "./Search";
 
 class App extends React.Component {
@@ -53,17 +55,18 @@ class App extends React.Component {
           <Route path="/categories" exact>
             <Categories />
           </Route>
-          
+
           <Route path="/search" exact>
             <Search />
           </Route>
-
+          <Route path="/account/products-info" component={ProductsInfo} />
           <Route path="/account" exact component={Account} />
+
           <Route path="/account/addresses" component={AddressForm} />
           <Route path="/account/wallet" component={CreditCardForm} />
           <Route path="/account/orders" component={OrdersHistory} />
-          <Route path="/account/products-info" component={ProductsInfo} />
-          {/* <Route path='/account/users-info' component={UsersInfo} /> */}
+          <Route path="/account/add-product" component={CreateProduct} />
+          <Route path="/account/users-info" component={UsersInfo} />
         </Switch>
         <Route
           path={["/products/category/:id", "/products/genre/:id"]}

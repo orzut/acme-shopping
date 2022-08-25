@@ -1,33 +1,31 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { HashLink } from "react-router-hash-link";
 import "../Account.css";
-import { createProduct, updateProduct, deleteProduct } from "../store";
+import { updateProduct, deleteProduct } from "../store";
+import Modal from "@mui/material/Modal";
 
 class ProductsInfo extends React.Component {
   constructor() {
     super();
-    this.state = {};
-    this.save = this.save.bind(this);
-    this.onChange = this.onChange.bind(this);
+    this.state = {
+      openModal: false,
+    };
+    this.handleClose = this.handleClose.bind(this);
   }
-  onChange(ev) {
-    this.setState({ [ev.target.name]: ev.target.value });
+  handleClose() {
+    this.setState({ openModal: false });
   }
-  async save(ev) {
-    ev.preventDefault();
-  }
-
   render() {
-    const { onChange, save } = this;
-    let { products, session, categories, genres } = this.props;
+    let { products, session, categories, genres, deleteProduct } = this.props;
     products = products.slice(0, 50);
+
     return (
       <div id="account-page">
         <h2>Welcome {session.auth.firstName}</h2>
         <div className="container">
           <nav id="admin-nav">
+            <Link to="/account/add-product">Create Product</Link>
             <Link to="/account/products-info">Products</Link>
             <Link to="/account/users-info">Users</Link>
           </nav>
@@ -67,16 +65,23 @@ class ProductsInfo extends React.Component {
                     <td>{product.inventory}</td>
 
                     <td>
-                      <i className="fa-solid fa-pencil"></i>
+                      <i
+                        onClick={() => this.setState({ openModal: true })}
+                        className="fa-solid fa-pencil"
+                      ></i>
                     </td>
                     <td>
-                      <i className="fa-regular fa-trash-can"></i>
+                      <i
+                        onClick={() => deleteProduct(product)}
+                        className="fa-regular fa-trash-can"
+                      ></i>
                     </td>
                   </tr>
                 );
               })}
             </tbody>
           </table>
+          {/* <Modal open={this.state.openModal} onClose={this.handleClose}></Modal> */}
         </div>
       </div>
     );
@@ -85,7 +90,6 @@ class ProductsInfo extends React.Component {
 
 const mapDispatch = (dispatch) => {
   return {
-    addProduct: () => dispatch(createProduct()),
     updateProduct: (product) => dispatch(updateProduct(product)),
     deleteProduct: (product) => dispatch(deleteProduct(product)),
   };

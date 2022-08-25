@@ -4,6 +4,7 @@ const initialState = {
   auth: {},
   invalidLogin: false,
   accountModalIsOpen: false,
+  users: [],
 };
 
 const session = (state = initialState, action) => {
@@ -17,6 +18,10 @@ const session = (state = initialState, action) => {
     state = { ...state, accountModalIsOpen: true };
   } else if (action.type === "CLOSE_ACCOUNT_MODAL") {
     state = { ...state, accountModalIsOpen: false };
+  } else if (action.type === "GET_USERS") {
+    state = { ...state, users: action.users };
+  } else if (action.type === "UPDATE_USER_INFO") {
+    state = { ...state, user: action.user };
   }
   return state;
 };
@@ -103,7 +108,6 @@ export const createUser = (user) => {
     try {
       //console.log(user);
       let createdUser = (await axios.post("/api/users", user)).data;
-      console.log(createdUser);
       let response = await axios.post("/api/sessions", {
         email: user.email,
         password: user.password,
@@ -122,6 +126,41 @@ export const createUser = (user) => {
       console.log(err);
     }
     //dispatch({ type: "CREATE_USER" });
+  };
+};
+
+export const getUsers = () => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get("/api/users", {
+        headers: {
+          authorization: window.localStorage.getItem("token"),
+        },
+      });
+      dispatch({ type: "GET_USERS", users: response.data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const updateUserInfo = (user) => {
+  return async (dispatch) => {
+    try {
+      const token = window.localStorage.getItem("token");
+      if (token) {
+        user = (
+          await axios.put(`/api/users/${user.id}`, user, {
+            headers: {
+              authorization: token,
+            },
+          })
+        ).data;
+        dispatch({ type: "UPDATE_USER_INFO", user });
+      }
+    } catch (ex) {
+      console.log(ex);
+    }
   };
 };
 

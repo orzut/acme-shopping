@@ -18,7 +18,12 @@
 .products-list {
   display: flex;
   justify-content: space-around;
-  margin: 1rem;
+  margin: 2rem;
+  align-content: center;
+}
+
+.product {
+  box-shadow: 0 3px 6px 0 darkgrey;
 }
 
 .product p {

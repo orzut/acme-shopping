@@ -34,17 +34,18 @@ export const fetchProducts = () => {
   };
 };
 
-export const createProduct = (product) => {
+export const createProduct = (product, history) => {
   return async (dispatch) => {
     try {
       product = (
         await axios.post("/api/products", product, {
           headers: {
-            authorization: token,
+            authorization: window.localStorage.getItem("token"),
           },
         })
       ).data;
       dispatch({ type: ADD_PRODUCT, product });
+      history.push("/account/products-info");
     } catch (err) {
       console.log(err);
     }

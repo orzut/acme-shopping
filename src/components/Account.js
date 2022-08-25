@@ -52,47 +52,48 @@ class Account extends React.Component {
     return (
       <div id="account-page">
         <h2>Welcome {user.firstName}</h2>
-        {user.userType === "admin" ? (
+        {/* {user.userType === "admin" ? (
           <nav>
+            <Link to="/account/add-product">Create Product</Link>
             <Link to="/account/products-info">Products</Link>
             <Link to="/account/users-info">Users</Link>
           </nav>
-        ) : (
-          <div className="container">
-            <nav>
-              <Link to="/account">Profile</Link>
-              <Link to="/account/addresses">Addresses</Link>
-              <Link to="/account/wallet">Wallet</Link>
-              <Link to="/account/orders">Purchases</Link>
-            </nav>
-            <table className="personal-info">
-              <tbody>
-                <tr>
-                  <td>First Name:</td>
-                  <td>{user.firstName}</td>
-                </tr>
-                <tr>
-                  <td>Last Name:</td>
-                  <td>{user.lastName}</td>
-                </tr>
-                <tr>
-                  <td>E-mail:</td>
-                  <td>{user.email}</td>
-                </tr>
-                <tr>
-                  <td>Phone:</td>
-                  <td>{user.phone}</td>
-                </tr>
-              </tbody>
-            </table>
-            <HashLink to="/account#edit-form">
-              <i
-                className="fa-solid fa-pencil"
-                onClick={() => this.setState({ displayEditForm: true })}
-              ></i>
-            </HashLink>
-          </div>
-        )}
+        ) : ( */}
+        <div className="container">
+          <nav>
+            <Link to="/account">Profile</Link>
+            <Link to="/account/addresses">Addresses</Link>
+            <Link to="/account/wallet">Wallet</Link>
+            <Link to="/account/orders">Purchases</Link>
+          </nav>
+          <table className="personal-info">
+            <tbody>
+              <tr>
+                <td>First Name:</td>
+                <td>{user.firstName}</td>
+              </tr>
+              <tr>
+                <td>Last Name:</td>
+                <td>{user.lastName}</td>
+              </tr>
+              <tr>
+                <td>E-mail:</td>
+                <td>{user.email}</td>
+              </tr>
+              <tr>
+                <td>Phone:</td>
+                <td>{user.phone}</td>
+              </tr>
+            </tbody>
+          </table>
+          <HashLink to="/account#edit-form">
+            <i
+              className="fa-solid fa-pencil"
+              onClick={() => this.setState({ displayEditForm: true })}
+            ></i>
+          </HashLink>
+        </div>
+        {/* )} */}
 
         {displayEditForm ? (
           <form id="edit-form" className="edit-form" onSubmit={save}>
