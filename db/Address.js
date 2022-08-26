@@ -1,7 +1,7 @@
 const conn = require("./conn");
 const { Sequelize } = conn;
 
-const { STRING } = Sequelize;
+const { STRING, BOOLEAN } = Sequelize;
 
 const Address = conn.define("address", {
   apt: {
@@ -25,6 +25,10 @@ const Address = conn.define("address", {
     validate: {
       is: /^[0-9]{5}$/i,
     },
+  },
+  isPrimary: {
+    type: BOOLEAN,
+    defaultValue: true,
   },
 });
 

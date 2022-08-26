@@ -21,7 +21,14 @@ app.get("/", isLoggedIn, async (req, res, next) => {
 
 app.post("/", isLoggedIn, async (req, res, next) => {
   try {
-    res.send(await req.user.addAddress(req.body));
+    await req.user.addAddress(req.body);
+    res.send(
+      await Address.findAll({
+        where: {
+          userId: req.user.id,
+        },
+      })
+    );
   } catch (ex) {
     next(ex);
   }

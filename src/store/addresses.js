@@ -3,6 +3,7 @@ import axios from "axios";
 const GET_ADDRESSES = "GET_ADDRESSES";
 const ADD_ADDRESS = "ADD_ADDRESS";
 const DELETE_ADDRESS = "DELETE_ADDRESS";
+const CLEAR_ADDRESSES = "CLEAR_ADDRESSES";
 
 const addresses = (state = [], action) => {
   if (action.type === GET_ADDRESSES) {
@@ -13,6 +14,9 @@ const addresses = (state = [], action) => {
   }
   if (action.type === DELETE_ADDRESS) {
     return state.filter((address) => address !== action.address);
+  }
+  if (action.type === CLEAR_ADDRESSES) {
+    return [];
   }
   return state;
 };
@@ -40,14 +44,15 @@ export const createAddress = (address) => {
     try {
       const token = window.localStorage.getItem("token");
       if (token) {
-        address = (
+        // address = { ...address, isPrimary: true };
+        const updatedAddresses = (
           await axios.post("/api/addresses", address, {
             headers: {
               authorization: token,
             },
           })
         ).data;
-        dispatch({ type: ADD_ADDRESS, address });
+        dispatch({ type: GET_ADDRESSES, addresses: updatedAddresses });
       }
     } catch (err) {
       console.log(err);
@@ -68,6 +73,12 @@ export const deleteAddress = (address) => {
     } catch (err) {
       console.log(err);
     }
+  };
+};
+
+export const clearAddresses = () => {
+  return (dispatch) => {
+    dispatch({ type: CLEAR_ADDRESSES });
   };
 };
 

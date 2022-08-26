@@ -3,8 +3,10 @@ import { connect } from "react-redux";
 import { HashLink } from "react-router-hash-link";
 import "../Account.css";
 import { createAddress, getAddresses, deleteAddress } from "../store";
-import { TextField, Alert, AlertTitle } from "@mui/material";
 import NavAccount from "./NavAccount";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 
 class AddressForm extends React.Component {
   constructor() {
@@ -16,6 +18,8 @@ class AddressForm extends React.Component {
       state: "",
       zipcode: "",
       displayAddressForm: false,
+      isPrimary: true,
+      addresses: [],
     };
     this.save = this.save.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -31,6 +35,8 @@ class AddressForm extends React.Component {
       city: "",
       state: "",
       zipcode: "",
+      isPrimary: true,
+      addresses: [],
     });
   }
 
@@ -40,6 +46,13 @@ class AddressForm extends React.Component {
 
   componentDidMount() {
     this.props.loadAddresses();
+    this.setState({ addresses: this.props.addresses });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!prevProps.addresses.length && this.props.addresses.length) {
+      this.setState({ addresses: this.props.addresses });
+    }
   }
 
   render() {
@@ -89,6 +102,18 @@ class AddressForm extends React.Component {
         {displayAddressForm ? (
           <form onSubmit={save} className="address-form">
             <h3 id="address-form">Add a new address</h3>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={this.state.isPrimary}
+                  onChange={() => {
+                    this.setState({ isPrimary: !this.state.isPrimary });
+                  }}
+                  disabled={this.state.addresses.length === 0 ? true : false}
+                />
+              }
+              label="Primary Address"
+            />
             <TextField
               required
               margin="dense"
