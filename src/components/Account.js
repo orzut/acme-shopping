@@ -36,6 +36,11 @@ class Account extends React.Component {
       alert("Please enter valid data");
     }
   }
+  componentDidUpdate(prevProps) {
+    if (!prevProps.session.auth.id && this.props.session.auth.id) {
+      this.setState({ ...this.props.session.auth, password: "" });
+    }
+  }
 
   render() {
     const user = this.props.session.auth;
@@ -52,47 +57,40 @@ class Account extends React.Component {
     return (
       <div id="account-page">
         <h2>Welcome {user.firstName}</h2>
-        {user.userType === "admin" ? (
+        <div className="container">
           <nav>
-            <Link to="/account/products-info">Products</Link>
-            <Link to="/account/users-info">Users</Link>
+            <Link to="/account">Profile</Link>
+            <Link to="/account/addresses">Addresses</Link>
+            <Link to="/account/wallet">Wallet</Link>
+            <Link to="/account/orders">Purchases</Link>
           </nav>
-        ) : (
-          <div className="container">
-            <nav>
-              <Link to="/account">Profile</Link>
-              <Link to="/account/addresses">Addresses</Link>
-              <Link to="/account/wallet">Wallet</Link>
-              <Link to="/account/orders">Purchases</Link>
-            </nav>
-            <table className="personal-info">
-              <tbody>
-                <tr>
-                  <td>First Name:</td>
-                  <td>{user.firstName}</td>
-                </tr>
-                <tr>
-                  <td>Last Name:</td>
-                  <td>{user.lastName}</td>
-                </tr>
-                <tr>
-                  <td>E-mail:</td>
-                  <td>{user.email}</td>
-                </tr>
-                <tr>
-                  <td>Phone:</td>
-                  <td>{user.phone}</td>
-                </tr>
-              </tbody>
-            </table>
-            <HashLink to="/account#edit-form">
-              <i
-                className="fa-solid fa-pencil"
-                onClick={() => this.setState({ displayEditForm: true })}
-              ></i>
-            </HashLink>
-          </div>
-        )}
+          <table className="personal-info">
+            <tbody>
+              <tr>
+                <td>First Name:</td>
+                <td>{user.firstName}</td>
+              </tr>
+              <tr>
+                <td>Last Name:</td>
+                <td>{user.lastName}</td>
+              </tr>
+              <tr>
+                <td>E-mail:</td>
+                <td>{user.email}</td>
+              </tr>
+              <tr>
+                <td>Phone:</td>
+                <td>{user.phone}</td>
+              </tr>
+            </tbody>
+          </table>
+          <HashLink to="/account#edit-form">
+            <i
+              className="fa-solid fa-pencil"
+              onClick={() => this.setState({ displayEditForm: true })}
+            ></i>
+          </HashLink>
+        </div>
 
         {displayEditForm ? (
           <form id="edit-form" className="edit-form" onSubmit={save}>
@@ -137,7 +135,6 @@ class Account extends React.Component {
               value={phone}
             />
             <TextField
-              required
               margin="dense"
               type="password"
               name="password"
@@ -147,7 +144,6 @@ class Account extends React.Component {
               value={password}
             />
             <TextField
-              required
               margin="dense"
               type="password"
               name="passwordVerify"

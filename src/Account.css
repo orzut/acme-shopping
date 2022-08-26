@@ -5,7 +5,7 @@
 nav {
   display: flex;
   flex-direction: column;
-  width: 12rem;
+  min-width: 12rem;
   border-right: 2px solid black;
   margin-right: 2rem;
 }
@@ -15,7 +15,6 @@ nav a {
   background-color: 343a40;
   color: edf2f4;
   padding: 1rem;
-  width: auto;
   margin: 0.5rem;
 }
 
@@ -78,7 +77,8 @@ nav a:hover,
 
 .address button,
 .address-form button,
-.edit-form button {
+.edit-form button,
+.create-btn {
   background-color: 343a40;
   color: edf2f4;
   cursor: pointer;
@@ -126,19 +126,25 @@ nav a:hover,
 
 .products-table thead,
 .products-table tbody,
-.products-table tr {
+.products-table tr,
+.users-table thead,
+.users-table tbody,
+.users-table tr {
   display: contents;
 }
 
 .products-table th,
-.products-table td {
+.products-table td,
+.users-table th,
+.users-table td {
   padding: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.products-table th {
+.products-table th,
+.users-table th {
   position: sticky;
   top: 0;
   padding: 10px;
@@ -147,11 +153,47 @@ nav a:hover,
   color: edf2f4;
 }
 
-.products-table tr:nth-child(even) td {
+.products-table tr:nth-child(even) td,
+.users-table tr:nth-child(even) td {
   background: rgb(228, 226, 226);
 }
 
-#admin-nav {
-  position: sticky;
-  top: 20px;
+.create-product {
+  display: flex;
+  flex-direction: column;
+}
+
+.users-table {
+  display: grid;
+  border-collapse: collapse;
+  grid-template-columns: 1fr 2fr 2fr 4fr 3fr 2fr 2fr;
+}
+
+.img-upload {
+  margin: 8px 0px 8px 0;
+  background-color: white;
+}
+
+.line-items {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 1px 1px 0;
+  margin: 10px;
+  padding: 5px;
+}
+
+.line-items > * {
+  width: 120px;
+  font-size: small;
+  line-height: normal;
+}
+
+.order {
+  display: flex;
+}
+
+.orders {
+  margin-bottom: 5rem;
+  list-style-type: none;
+  line-height: 10px;
 }
