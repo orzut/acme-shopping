@@ -112,17 +112,11 @@ User.prototype.addAddress = async function (address) {
   return await conn.models.address.create({ ...address, userId: this.id });
 };
 
-User.prototype.addCreditCard = async function (creditCard) {
-  return await conn.models.creditCard.create({
-    ...creditCard,
-    userId: this.id,
-  });
-};
-
 User.prototype.getOrders = async function () {
   const orders = await conn.models.order.findAll({
     where: {
       userId: this.id,
+      isCart: false,
     },
     include: [{ model: conn.models.lineItem, include: [conn.models.product] }],
   });

@@ -1,10 +1,10 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import "../Account.css";
 import { updateUser } from "../store";
 import TextField from "@mui/material/TextField";
+import NavAccount from "./NavAccount";
 
 class Account extends React.Component {
   constructor() {
@@ -36,6 +36,9 @@ class Account extends React.Component {
       alert("Please enter valid data");
     }
   }
+  componentDidMount() {
+    this.setState({ ...this.props.session.auth, password: "" });
+  }
   componentDidUpdate(prevProps) {
     if (!prevProps.session.auth.id && this.props.session.auth.id) {
       this.setState({ ...this.props.session.auth, password: "" });
@@ -58,12 +61,7 @@ class Account extends React.Component {
       <div id="account-page">
         <h2>Welcome {user.firstName}</h2>
         <div className="container">
-          <nav>
-            <Link to="/account">Profile</Link>
-            <Link to="/account/addresses">Addresses</Link>
-            <Link to="/account/wallet">Wallet</Link>
-            <Link to="/account/orders">Purchases</Link>
-          </nav>
+          <NavAccount />
           <table className="personal-info">
             <tbody>
               <tr>
@@ -84,7 +82,7 @@ class Account extends React.Component {
               </tr>
             </tbody>
           </table>
-          <HashLink to="/account#edit-form">
+          <HashLink to="/account/profile#edit-form">
             <i
               className="fa-solid fa-pencil"
               onClick={() => this.setState({ displayEditForm: true })}

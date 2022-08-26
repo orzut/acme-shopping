@@ -1,7 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { HashLink } from "react-router-hash-link";
 import "../Account.css";
 import { createProduct, updateProduct } from "../store";
 import {
@@ -11,6 +9,7 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
+import NavAccount from "./NavAccount";
 
 class CreateProduct extends React.Component {
   constructor() {
@@ -60,15 +59,10 @@ class CreateProduct extends React.Component {
 
     return (
       <div id="account-page">
-        <h2>Welcome {session.auth.firstName}</h2>
+        <h2>Create a new product</h2>
         <div className="container">
-          <nav id="admin-nav">
-            <Link to="/account/add-product">Create Product</Link>
-            <Link to="/account/products-info">Products</Link>
-            <Link to="/account/users-info">Users</Link>
-          </nav>
+          <NavAccount />
           <div>
-            <h3>Create a new product</h3>
             <form className="create-product" onSubmit={save}>
               <TextField
                 required

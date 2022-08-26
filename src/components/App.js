@@ -19,7 +19,6 @@ import Categories from "./Categories";
 import Products from "./Products";
 import Account from "./Account";
 import AddressForm from "./AddressForm";
-import CreditCardForm from "./CreditCardForm";
 import CartModal from "./CartModal";
 import OrdersHistory from "./OrdersHistory";
 import ProductsInfo from "./ProductsInfo";
@@ -27,6 +26,7 @@ import CreateProduct from "./CreateProduct";
 import UsersInfo from "./UsersInfo";
 import Search from "./Search";
 import ProductModal from "./ProductModal";
+import NavAccount from "./NavAccount";
 
 class App extends React.Component {
   componentDidMount() {
@@ -61,10 +61,8 @@ class App extends React.Component {
             <Search />
           </Route>
           <Route path="/account/products-info" component={ProductsInfo} />
-          <Route path="/account" exact component={Account} />
-
+          <Route path="/account/profile" component={Account} />
           <Route path="/account/addresses" component={AddressForm} />
-          <Route path="/account/wallet" component={CreditCardForm} />
           <Route path="/account/orders" component={OrdersHistory} />
           <Route path="/account/add-product" component={CreateProduct} />
           <Route path="/account/users-info" component={UsersInfo} />

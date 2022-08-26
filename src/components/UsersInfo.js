@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import "../Account.css";
 import { getUsers, updateUserInfo } from "../store";
+import NavAccount from "./NavAccount";
 
 class UsersInfo extends React.Component {
   constructor() {
@@ -25,13 +26,9 @@ class UsersInfo extends React.Component {
     const users = this.props.session.users;
     return (
       <div id="account-page">
-        <h2>Welcome {this.props.session.auth.firstName}</h2>
+        <h2>Users Table</h2>
         <div className="container">
-          <nav id="admin-nav">
-            <Link to="/account/add-product">Create Product</Link>
-            <Link to="/account/products-info">Products</Link>
-            <Link to="/account/users-info">Users</Link>
-          </nav>
+          <NavAccount />
           <table className="users-table">
             <thead>
               <tr>

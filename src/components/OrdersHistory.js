@@ -1,9 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { HashLink } from "react-router-hash-link";
 import "../Account.css";
 import { getOrders } from "../store";
+import NavAccount from "./NavAccount";
 
 class OrdersHistory extends React.Component {
   constructor() {
@@ -15,18 +14,13 @@ class OrdersHistory extends React.Component {
     this.props.loadOrders();
   }
   render() {
-    const { orders } = this.props;
+    const { orders, session } = this.props;
 
     return (
       <div id="account-page">
         <h2>Your Purchases</h2>
         <div className="container">
-          <nav>
-            <Link to="/account">Profile</Link>
-            <Link to="/account/addresses">Addresses</Link>
-            <Link to="/account/wallet">Wallet</Link>
-            <Link to="/account/orders">Purchases</Link>
-          </nav>
+          <NavAccount />
           <ul>
             {orders.map((order) => {
               return (
