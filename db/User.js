@@ -124,9 +124,8 @@ User.prototype.getOrders = async function () {
     where: {
       userId: this.id,
     },
-    include: [conn.models.lineItem],
+    include: [{ model: conn.models.lineItem, include: [conn.models.product] }],
   });
-  console.log(orders);
   return orders;
 };
 
@@ -153,20 +152,6 @@ User.findByToken = async function findByToken(token) {
       throw "error";
     }
     return user;
-  } catch (ex) {
-    const error = new Error("bad token");
-    error.status = 401;
-    throw error;
-  }
-};
-
-User.isAdmin = async function isAdmin(token) {
-  try {
-    const id = jwt.verify(token, process.env.JWT).id;
-    const user = await User.findByPk(id);
-    if (user.userType === "admin") {
-      return user;
-    } else throw "error";
   } catch (ex) {
     const error = new Error("bad token");
     error.status = 401;

@@ -40,7 +40,7 @@ app.get("/category/:id", async (req, res, next) => {
 app.delete("/:id", isLoggedIn, async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id);
-    await product.destoy();
+    await product.destroy();
     res.sendStatus(204);
   } catch (ex) {
     next(ex);
@@ -50,7 +50,7 @@ app.delete("/:id", isLoggedIn, async (req, res, next) => {
 app.put("/:id", isLoggedIn, async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id);
-    re.send(await product.update(req.body));
+    res.send(await product.update(req.body));
   } catch (ex) {
     next(ex);
   }
@@ -58,7 +58,7 @@ app.put("/:id", isLoggedIn, async (req, res, next) => {
 
 app.post("/", isLoggedIn, async (req, res, next) => {
   try {
-    re.send(await Product.create(req.body));
+    res.send(await Product.create(req.body));
   } catch (ex) {
     next(ex);
   }

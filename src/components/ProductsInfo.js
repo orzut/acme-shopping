@@ -1,33 +1,33 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { HashLink } from "react-router-hash-link";
 import "../Account.css";
-import { createProduct, updateProduct, deleteProduct } from "../store";
+import { updateProduct, deleteProduct } from "../store";
+import EditProduct from "./EditProduct";
 
 class ProductsInfo extends React.Component {
   constructor() {
     super();
-    this.state = {};
-    this.save = this.save.bind(this);
-    this.onChange = this.onChange.bind(this);
+    this.state = {
+      openModal: false,
+      product: {},
+    };
+    this.handleClose = this.handleClose.bind(this);
   }
-  onChange(ev) {
-    this.setState({ [ev.target.name]: ev.target.value });
-  }
-  async save(ev) {
-    ev.preventDefault();
+  handleClose() {
+    this.setState({ openModal: false });
   }
 
   render() {
-    const { onChange, save } = this;
-    let { products, session, categories, genres } = this.props;
+    let { products, session, categories, genres, deleteProduct } = this.props;
     products = products.slice(0, 50);
+
     return (
       <div id="account-page">
         <h2>Welcome {session.auth.firstName}</h2>
         <div className="container">
           <nav id="admin-nav">
+            <Link to="/account/add-product">Create Product</Link>
             <Link to="/account/products-info">Products</Link>
             <Link to="/account/users-info">Users</Link>
           </nav>
@@ -67,28 +67,52 @@ class ProductsInfo extends React.Component {
                     <td>{product.inventory}</td>
 
                     <td>
-                      <i className="fa-solid fa-pencil"></i>
+                      <i
+                        onClick={() =>
+                          this.setState({
+                            openModal: true,
+                            product: product,
+                          })
+                        }
+                        className="fa-solid fa-pencil"
+                      ></i>
                     </td>
                     <td>
-                      <i className="fa-regular fa-trash-can"></i>
+                      <i
+                        onClick={() => deleteProduct(product)}
+                        className="fa-regular fa-trash-can"
+                      ></i>
                     </td>
                   </tr>
                 );
               })}
             </tbody>
           </table>
+          <EditProduct
+            product={this.state.product}
+            open={this.state.openModal}
+            onClose={this.handleClose}
+          />
         </div>
       </div>
     );
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    categories: state.categories || [],
+    genres: state.genres || [],
+    products: state.products || [],
+    session: state.session,
+  };
+};
+
 const mapDispatch = (dispatch) => {
   return {
-    addProduct: () => dispatch(createProduct()),
     updateProduct: (product) => dispatch(updateProduct(product)),
     deleteProduct: (product) => dispatch(deleteProduct(product)),
   };
 };
 
-export default connect((state) => state, mapDispatch)(ProductsInfo);
+export default connect(mapStateToProps, mapDispatch)(ProductsInfo);

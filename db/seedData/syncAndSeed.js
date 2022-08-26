@@ -3,15 +3,12 @@ const {
   User,
   Product,
   CreditCard,
-  Category,
-  Genre,
   Address,
   Order,
   LineItem,
 } = require("../");
 const { USERS } = require("./seedDataUsers");
-const { CATEGORIES } = require("./seedDataCategories");
-const { GENRES } = require("./seedDataGenres");
+
 const { seedDataProducts } = require("./seedDataProducts");
 
 const syncAndSeed = async () => {
@@ -51,10 +48,46 @@ const syncAndSeed = async () => {
     });
 
     const date = new Date();
-    const lucyCart = await Order.create({
+    const lucyCart1 = await Order.create({
       userId: lucy.id,
       orderDate: date,
+      isCart: true,
     });
+    const lucyCart2 = await Order.create({
+      userId: lucy.id,
+      orderDate: date,
+      isCart: true,
+    });
+    await LineItem.create({
+      quantity: 5,
+      productId: 1,
+      orderId: lucyCart1.id,
+    });
+    await LineItem.create({
+      quantity: 2,
+      productId: 3,
+      orderId: lucyCart1.id,
+    });
+    await LineItem.create({
+      quantity: 3,
+      productId: 7,
+      orderId: lucyCart2.id,
+    });
+    await LineItem.create({
+      quantity: 1,
+      productId: 6,
+      orderId: lucyCart2.id,
+    });
+    // await LineItem.create({
+    //   quantity: 5,
+    //   productId: nsync.id,
+    //   orderId: lucyCart.id,
+    // });
+    // await LineItem.create({
+    //   quantity: 5,
+    //   productId: kendrickLamar.id,
+    //   orderId: lucyCart.id,
+    // });
   } catch (ex) {
     console.log(ex);
   }
