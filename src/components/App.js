@@ -60,10 +60,7 @@ class App extends React.Component {
           <Route path="/search" exact>
             <Search />
           </Route>
-<<<<<<< HEAD
           <Route path="/account/products-info" component={ProductsInfo} />
-=======
->>>>>>> ee5269dcdab7f13164b3e60d0df3feb46cc3b2e1
           <Route path="/account" exact component={Account} />
 
           <Route path="/account/addresses" component={AddressForm} />

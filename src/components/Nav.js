@@ -12,8 +12,6 @@ import {
 } from "../store";
 import "../Nav.css";
 
-<<<<<<< HEAD
-=======
 function SearchIcon() {
   let history = useHistory();
 
@@ -24,7 +22,6 @@ function SearchIcon() {
   return <i className="fa-solid fa-magnifying-glass" onClick={onClickSearch} />;
 }
 
->>>>>>> ee5269dcdab7f13164b3e60d0df3feb46cc3b2e1
 class Nav extends React.Component {
   constructor() {
     super();

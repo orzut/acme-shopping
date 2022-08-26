@@ -78,7 +78,6 @@ const syncAndSeed = async () => {
       productId: 6,
       orderId: lucyCart2.id,
     });
-<<<<<<< HEAD
     // await LineItem.create({
     //   quantity: 5,
     //   productId: nsync.id,
@@ -89,8 +88,6 @@ const syncAndSeed = async () => {
     //   productId: kendrickLamar.id,
     //   orderId: lucyCart.id,
     // });
-=======
->>>>>>> ee5269dcdab7f13164b3e60d0df3feb46cc3b2e1
   } catch (ex) {
     console.log(ex);
   }

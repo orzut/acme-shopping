@@ -156,7 +156,6 @@ export const updateUserInfo = (user) => {
             },
           })
         ).data;
-        console.log(user);
         dispatch({ type: "UPDATE_USER_INFO", user });
       }
     } catch (ex) {
