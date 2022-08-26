@@ -79,3 +79,10 @@
   background-color: lightgrey;
   border-radius: 0.5rem;
 }
+
+#cartModal .modal-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}

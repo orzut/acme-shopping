@@ -4,13 +4,60 @@ import { connect } from "react-redux";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 // import styled from "@emotion/styled";
 import axios from "axios";
 import "../Checkout.css";
+import { processOrder } from "../store";
 
-const Checkout = ({ cart }) => {
+const Checkout = ({ cart, session, addresses, history, processOrder }) => {
   const [isProcessing, setProcessingTo] = useState(false);
   const [checkoutError, setCheckoutError] = useState();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zipCode, setZipCode] = useState("");
+  const [selectedAddress, setSelectedAddress] = useState("");
+  const [amount, setAmount] = useState(0);
+
+  // session.auth.id ? `${session.auth.firstName} ${session.auth.lastName}` : ""
+
+  useEffect(() => {
+    console.log(history);
+
+    const primaryAddress =
+      addresses.length > 0
+        ? addresses.find((address) => address.isPrimary)
+        : "";
+
+    setName(
+      session.auth.id
+        ? `${session.auth.firstName} ${session.auth.lastName}`
+        : ""
+    );
+    setEmail(session.auth.id ? session.auth.email : "");
+    setAddress(
+      primaryAddress ? `${primaryAddress.street} ${primaryAddress.apt}` : ""
+    );
+    setCity(primaryAddress ? primaryAddress.city : "");
+    setState(primaryAddress ? primaryAddress.state : "");
+    setZipCode(primaryAddress ? primaryAddress.zipcode : "");
+    setSelectedAddress(primaryAddress ? primaryAddress.id : "custom");
+    setAmount(
+      cart.cartData.lineItems.length > 0
+        ? cart.cartData.lineItems
+            .reduce((accum, lineItem) => {
+              return accum + lineItem.product.cost * lineItem.quantity;
+            }, 0)
+            .toFixed(2)
+        : 0
+    );
+  }, [session, addresses, cart]);
 
   const stripe = useStripe();
   const elements = useElements();
@@ -23,15 +70,17 @@ const Checkout = ({ cart }) => {
     ev.preventDefault();
 
     const billingDetails = {
-      name: ev.target.name.value,
-      email: ev.target.email.value,
+      name: name,
+      email: email,
       address: {
-        city: ev.target.city.value,
-        line1: ev.target.address.value,
-        state: ev.target.state.value,
-        postal_code: ev.target.zipCode.value,
+        city: city,
+        line1: address,
+        state: state,
+        postal_code: zipCode,
       },
     };
+
+    console.log(billingDetails);
 
     setProcessingTo(true);
 
@@ -41,7 +90,7 @@ const Checkout = ({ cart }) => {
       const { data: clientSecret } = await axios.post(
         "/api/orders/create-payment-intent",
         {
-          amount: 14 * 100,
+          amount: amount * 100,
         }
       );
 
@@ -69,9 +118,21 @@ const Checkout = ({ cart }) => {
         setProcessingTo(false);
         return;
       }
+
+      history.push("/successfulCheckout");
+      processOrder(cart.cartData.id);
     } catch (err) {
       setCheckoutError(err.message);
     }
+  };
+
+  const selectAddress = (addressId) => {
+    const address = addresses.find((address) => address.id === addressId);
+    setAddress(address ? `${address.street} ${address.apt}` : "");
+    setCity(address ? address.city : "");
+    setState(address ? address.state : "");
+    setZipCode(address ? address.zipcode : "");
+    setSelectedAddress(address ? address.id : "custom");
   };
 
   const iframeStyles = {
@@ -97,6 +158,14 @@ const Checkout = ({ cart }) => {
     style: iframeStyles,
     hidePostalCode: true,
   };
+
+  const primaryAddress =
+    addresses.length > 0 ? addresses.find((address) => address.isPrimary) : "";
+
+  const nonPrimaryAddresses =
+    addresses.length > 0
+      ? addresses.filter((address) => !address.isPrimary)
+      : "";
 
   return (
     <div id="checkout">
@@ -133,35 +202,72 @@ const Checkout = ({ cart }) => {
           </div>
           <div className="cartFooter">
             <h2>
-              TOTAL: &nbsp;
-              {cart.cartData.lineItems.length &&
-                `$${cart.cartData.lineItems
-                  .reduce((accum, lineItem) => {
-                    return accum + lineItem.product.cost * lineItem.quantity;
-                  }, 0)
-                  .toFixed(2)}`}
+              ORDER TOTAL: &nbsp;
+              {cart.cartData.lineItems.length && `$${amount}`}
             </h2>
           </div>
         </div>
       </div>
       <div className="checkoutForm">
+        <h2>Order Form</h2>
         <form onSubmit={handleFormSubmit}>
           <div className="addressForm">
-            <TextField required name="name" label="Name" size="small" />
+            <TextField
+              required
+              name="name"
+              label="Name"
+              size="small"
+              value={name}
+              onChange={(ev) => {
+                setName(ev.target.value);
+              }}
+            />
             <TextField
               required
               name="email"
               label="Email"
               size="small"
               type="email"
+              value={email}
+              onChange={(ev) => {
+                setEmail(ev.target.value);
+              }}
             />
           </div>
+          {addresses.length > 0 ? (
+            <FormControl fullWidth>
+              <InputLabel id="addressInputLabel">Address</InputLabel>
+              <Select
+                labelId="addressLabel"
+                id="address"
+                value={selectedAddress}
+                label="Address"
+                onChange={(ev) => {
+                  selectAddress(ev.target.value);
+                }}
+              >
+                {addresses.map((address) => {
+                  return (
+                    <MenuItem
+                      key={address.id}
+                      value={address.id}
+                    >{`${address.street} ${address.apt} ${address.city} ${address.state} ${address.zipcode}`}</MenuItem>
+                  );
+                })}
+                <MenuItem value={"custom"}>Custom</MenuItem>
+              </Select>
+            </FormControl>
+          ) : null}
           <TextField
             className="addressForm"
             required
             name="address"
             label="Street Address"
             size="small"
+            value={address}
+            onChange={(ev) => {
+              setAddress(ev.target.value);
+            }}
           />
           <div className="addressForm">
             <TextField
@@ -170,6 +276,10 @@ const Checkout = ({ cart }) => {
               name="city"
               label="City"
               size="small"
+              value={city}
+              onChange={(ev) => {
+                setCity(ev.target.value);
+              }}
             />
             <TextField
               className="state"
@@ -177,10 +287,14 @@ const Checkout = ({ cart }) => {
               name="state"
               label="State"
               size="small"
+              value={state}
               inputProps={{
                 style: { textTransform: "uppercase" },
                 maxLength: 2,
                 minLength: 2,
+              }}
+              onChange={(ev) => {
+                setState(ev.target.value);
               }}
             />
             <TextField
@@ -189,6 +303,17 @@ const Checkout = ({ cart }) => {
               name="zipCode"
               label="Zip Code"
               size="small"
+              value={zipCode}
+              inputProps={{
+                maxLength: 5,
+                minLength: 5,
+              }}
+              onChange={(ev) => {
+                // if(ev.target.value)
+                setZipCode(
+                  ev.target.value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g)
+                );
+              }}
             />
           </div>
 
@@ -209,4 +334,13 @@ const Checkout = ({ cart }) => {
   );
 };
 
-export default connect((state) => state)(Checkout);
+const mapDispatch = (dispatch) => {
+  return {
+    processOrder: (cartId) => {
+      console.log("this ran");
+      dispatch(processOrder(cartId));
+    },
+  };
+};
+
+export default connect((state) => state, mapDispatch)(Checkout);

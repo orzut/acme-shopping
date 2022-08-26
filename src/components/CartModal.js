@@ -4,16 +4,29 @@ import "../CartModal.css";
 // import Cart from "./Cart";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import Button from "@mui/material/Button";
 
 import { closeCartModal, updateLineItemQty } from "../store";
 
 class CartModal extends React.Component {
   constructor() {
     super();
+    this.onClickCheckout = this.onClickCheckout.bind(this);
+  }
+
+  onClickCheckout() {
+    if (this.props.match.params.view === "checkout") {
+      this.props.closeCartModal();
+    } else {
+      this.props.history.push("/checkout");
+      this.props.closeCartModal();
+    }
   }
 
   render() {
     const { closeCartModal, cart, updateLineItemQty } = this.props;
+    const { onClickCheckout } = this;
+    console.log(this.props);
 
     return (
       <div id="cartModal">
@@ -29,7 +42,7 @@ class CartModal extends React.Component {
                   .sort((a, b) => a.id - b.id)
                   .map((lineItem) => {
                     return (
-                      <div key={lineItem.id} className="lineItem">
+                      <div key={lineItem.productId} className="lineItem">
                         <img src={lineItem.product.image} />
                         <div>
                           <h3>{lineItem.product.name}</h3>
@@ -90,6 +103,15 @@ class CartModal extends React.Component {
                     }, 0)
                     .toFixed(2)}
               </h2>
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={cart.cartData.lineItems.length === 0}
+                size="large"
+                onClick={onClickCheckout}
+              >
+                CHECKOUT
+              </Button>
             </div>
           </div>
         </div>

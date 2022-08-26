@@ -48,10 +48,11 @@
   display: flex;
   flex-direction: row;
   width: 100%;
+  flex-wrap: wrap;
 }
 
 #checkout > div:first-child {
-  width: 30%;
+  /* width: 30%; */
   padding: 0rem 2rem;
 }
 
@@ -99,4 +100,38 @@
 
 #checkout h4 {
   margin: 0;
+}
+
+#checkout .cartFooter {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#checkout .cart {
+  min-width: 35rem;
+}
+
+#checkout .addresses {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  max-width: 40rem;
+}
+
+#checkout .address {
+  width: 7rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.2rem;
+  overflow: hidden;
+}
+
+#checkout .address h4 {
+  padding: 0.2rem;
+  overflow: hidden;
 }

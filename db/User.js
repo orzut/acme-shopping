@@ -109,6 +109,21 @@ User.prototype.getCart = async function () {
 };
 
 User.prototype.addAddress = async function (address) {
+  const isPrimary = address.isPrimary;
+  if (isPrimary) {
+    const primaryAddress = await conn.models.address.findOne({
+      where: {
+        userId: this.id,
+        isPrimary: true,
+      },
+    });
+
+    if (primaryAddress) {
+      primaryAddress.isPrimary = false;
+      await primaryAddress.save();
+    }
+  }
+
   return await conn.models.address.create({ ...address, userId: this.id });
 };
 
