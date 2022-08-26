@@ -24,17 +24,13 @@ class Account extends React.Component {
   onChange(ev) {
     this.setState({ [ev.target.name]: ev.target.value });
   }
-  async save(ev) {
+  save(ev) {
     ev.preventDefault();
     if (this.state.password !== this.state.passwordVerify) {
       alert("Password does not match");
     }
-    try {
-      this.props.updateUser(this.state);
-      this.setState({ displayEditForm: false });
-    } catch (err) {
-      alert("Please enter valid data");
-    }
+    this.props.updateUser(this.state);
+    this.setState({ displayEditForm: false });
   }
   componentDidMount() {
     this.setState({ ...this.props.session.auth, password: "" });

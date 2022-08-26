@@ -113,6 +113,7 @@ User.prototype.addAddress = async function (address) {
 };
 
 User.prototype.getOrders = async function () {
+  console.log("hellllooooooo", await conn.models.lineItem.findAll());
   const orders = await conn.models.order.findAll({
     where: {
       userId: this.id,

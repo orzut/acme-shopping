@@ -48,6 +48,7 @@ export const createProduct = (product, history) => {
       history.push("/account/products-info");
     } catch (err) {
       console.log(err);
+      alert("Please enter valid data");
     }
   };
 };
@@ -80,6 +81,7 @@ export const updateProduct = (product) => {
       dispatch({ type: UPDATE_PRODUCT, product });
     } catch (err) {
       console.log(err);
+      alert("Please enter valid data");
     }
   };
 };

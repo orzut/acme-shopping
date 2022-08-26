@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { HashLink } from "react-router-hash-link";
 import "../Account.css";
 import { createAddress, getAddresses, deleteAddress } from "../store";
-import TextField from "@mui/material/TextField";
+import { TextField, Alert, AlertTitle } from "@mui/material";
 import NavAccount from "./NavAccount";
 
 class AddressForm extends React.Component {
@@ -122,6 +122,7 @@ class AddressForm extends React.Component {
             />
             <TextField
               required
+              maxLength="2"
               margin="dense"
               type="text"
               name="state"

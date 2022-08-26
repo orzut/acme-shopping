@@ -51,6 +51,7 @@ export const createAddress = (address) => {
       }
     } catch (err) {
       console.log(err);
+      alert("Please enter valid data");
     }
   };
 };
