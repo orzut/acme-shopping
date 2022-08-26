@@ -36,6 +36,11 @@ class Account extends React.Component {
       alert("Please enter valid data");
     }
   }
+  componentDidUpdate(prevProps) {
+    if (!prevProps.session.auth.id && this.props.session.auth.id) {
+      this.setState({ ...this.props.session.auth, password: "" });
+    }
+  }
 
   render() {
     const user = this.props.session.auth;
@@ -52,13 +57,6 @@ class Account extends React.Component {
     return (
       <div id="account-page">
         <h2>Welcome {user.firstName}</h2>
-        {/* {user.userType === "admin" ? (
-          <nav>
-            <Link to="/account/add-product">Create Product</Link>
-            <Link to="/account/products-info">Products</Link>
-            <Link to="/account/users-info">Users</Link>
-          </nav>
-        ) : ( */}
         <div className="container">
           <nav>
             <Link to="/account">Profile</Link>
@@ -93,7 +91,6 @@ class Account extends React.Component {
             ></i>
           </HashLink>
         </div>
-        {/* )} */}
 
         {displayEditForm ? (
           <form id="edit-form" className="edit-form" onSubmit={save}>
@@ -138,7 +135,6 @@ class Account extends React.Component {
               value={phone}
             />
             <TextField
-              required
               margin="dense"
               type="password"
               name="password"
@@ -148,7 +144,6 @@ class Account extends React.Component {
               value={password}
             />
             <TextField
-              required
               margin="dense"
               type="password"
               name="passwordVerify"

@@ -10,12 +10,17 @@ class UsersInfo extends React.Component {
     this.setAdmin = this.setAdmin.bind(this);
   }
   setAdmin(user) {
-    user.userType = "admin";
+    if (user.userType === "admin") {
+      user.userType = "user";
+    } else {
+      user.userType = "admin";
+    }
     this.props.updateUser(user);
   }
   componentDidMount() {
     this.props.loadUsers();
   }
+
   render() {
     const users = this.props.session.users;
     return (
@@ -51,7 +56,7 @@ class UsersInfo extends React.Component {
                     <td>{user.userType === "admin" ? "admin" : ""}</td>
                     <td>
                       <button onClick={() => this.setAdmin(user)}>
-                        Set as Admin
+                        {user.userType === "admin" ? "Remove" : "Set as Admin"}
                       </button>
                     </td>
                   </tr>

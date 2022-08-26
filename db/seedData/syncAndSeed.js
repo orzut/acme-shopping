@@ -24,7 +24,7 @@ const syncAndSeed = async () => {
       email: "lucy_bar@gmail.com",
       password: "lucy_pw",
       phone: "123-456-7890",
-      userType: "user",
+      userType: "admin",
     });
     const createdUsers = await Promise.all(
       USERS.map((user) => User.create(user))

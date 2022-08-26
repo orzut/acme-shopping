@@ -173,3 +173,27 @@ nav a:hover,
   margin: 8px 0px 8px 0;
   background-color: white;
 }
+
+.line-items {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 1px 1px 0;
+  margin: 10px;
+  padding: 5px;
+}
+
+.line-items > * {
+  width: 120px;
+  font-size: small;
+  line-height: normal;
+}
+
+.order {
+  display: flex;
+}
+
+.orders {
+  margin-bottom: 5rem;
+  list-style-type: none;
+  line-height: 10px;
+}
