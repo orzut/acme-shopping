@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import "../CartModal.css";
-import Cart from "./Cart";
+// import Cart from "./Cart";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 

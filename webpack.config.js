@@ -1,3 +1,6 @@
+//var webpack = require("webpack");
+const Dotenv = require("dotenv-webpack");
+
 module.exports = {
   devtool: "source-map",
   module: {
@@ -17,4 +20,13 @@ module.exports = {
       },
     ],
   },
+  // plugins: [
+  //   new webpack.DefinePlugin({
+  //     "process.env.PUBLISHABLE_KEY": JSON.stringify(
+  //       process.env.PUBLISHABLE_KEY
+  //     ),
+  //     "process.env.SECRET_KEY": JSON.stringify(process.env.SECRET_KEY),
+  //   }),
+  // ],
+  plugins: [new Dotenv()],
 };

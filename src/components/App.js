@@ -25,6 +25,7 @@ import OrdersHistory from "./OrdersHistory";
 import ProductsInfo from "./ProductsInfo";
 import Search from "./Search";
 import ProductModal from "./ProductModal";
+import Checkout from "./Checkout";
 
 class App extends React.Component {
   componentDidMount() {
@@ -63,6 +64,7 @@ class App extends React.Component {
           <Route path="/account/wallet" component={CreditCardForm} />
           <Route path="/account/orders" component={OrdersHistory} />
           <Route path="/account/products-info" component={ProductsInfo} />
+          <Route path="/checkout" component={Checkout} />
           {/* <Route path='/account/users-info' component={UsersInfo} /> */}
         </Switch>
         <Route
