@@ -7,6 +7,7 @@ import {
   logout,
   openAccountModal,
   emptyCart,
+  clearAddresses,
   // closeAccountModal,
   openCartModal,
 } from "../store";
@@ -46,7 +47,11 @@ class Nav extends React.Component {
 
   onLogout() {
     this.props.logout();
-    if (this.props.match.params.view === "account") {
+    this.props.clearAddresses();
+    if (
+      this.props.match.params.view === "account" ||
+      this.props.match.params.view === "checkout"
+    ) {
       this.props.history.push("/");
     }
   }
@@ -59,12 +64,16 @@ class Nav extends React.Component {
       openAccountModal,
       openCartModal,
       cart,
+      history,
+      match,
     } = this.props;
     const { onClickUser, onLogout } = this;
     return (
       <div className="Nav">
         {session.accountModalIsOpen ? <AccountModal /> : null}
-        {cart.cartModalIsOpen ? <CartModal /> : null}
+        {cart.cartModalIsOpen ? (
+          <CartModal history={history} match={match} />
+        ) : null}
         <div id="header">
           <h1>Grace Shopper</h1>
           <div>
@@ -129,6 +138,9 @@ const mapDispatch = (dispatch) => {
     },
     openCartModal: () => {
       dispatch(openCartModal());
+    },
+    clearAddresses: () => {
+      dispatch(clearAddresses());
     },
   };
 };

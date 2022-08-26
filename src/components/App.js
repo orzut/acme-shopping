@@ -8,6 +8,7 @@ import {
   fetchGenres,
   fetchProducts,
   loadLocalCart,
+  getAddresses,
 } from "../store";
 import { Link, Route, Switch } from "react-router-dom";
 import SignIn from "./SignIn";
@@ -27,6 +28,8 @@ import CreateProduct from "./CreateProduct";
 import UsersInfo from "./UsersInfo";
 import Search from "./Search";
 import ProductModal from "./ProductModal";
+import Checkout from "./Checkout";
+import SuccessfulCheckout from "./SuccessfulCheckout";
 
 class App extends React.Component {
   componentDidMount() {
@@ -39,6 +42,7 @@ class App extends React.Component {
   componentDidUpdate(prevProps) {
     if (!prevProps.session.auth.id && this.props.session.auth.id) {
       this.props.fetchCart();
+      this.props.getAddresses();
     }
   }
   render() {
@@ -67,6 +71,8 @@ class App extends React.Component {
           <Route path="/account/wallet" component={CreditCardForm} />
           <Route path="/account/orders" component={OrdersHistory} />
           <Route path="/account/add-product" component={CreateProduct} />
+          <Route path="/checkout" component={Checkout} />
+          <Route path="/successfulCheckout" component={SuccessfulCheckout} />
           <Route path="/account/users-info" component={UsersInfo} />
         </Switch>
         <Route
@@ -92,6 +98,7 @@ const mapDispatch = (dispatch) => {
     loadGenres: () => dispatch(fetchGenres()),
     loadProducts: () => dispatch(fetchProducts()),
     loadLocalCart: () => dispatch(loadLocalCart()),
+    getAddresses: () => dispatch(getAddresses()),
   };
 };
 const mapStateToProps = (state) => {

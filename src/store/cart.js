@@ -198,6 +198,12 @@ export const addItemToCart = (lineItem) => {
   };
 };
 
+export const processOrder = (cartId) => {
+  return async (dispatch) => {
+    console.log("processOrder ran");
+  };
+};
+
 export default cart;
 
 // Temporarily used the below in the console to create records in the guest cart

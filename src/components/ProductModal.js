@@ -55,6 +55,7 @@ class ProductModal extends React.Component {
           <div className="modal-content">
             <h2>{product.name}</h2>
             <img src={product.image} />
+            <h2>{`$${(product.cost * 1).toFixed(2)}`}</h2>
             <div>
               <div className="itemQuantity">
                 <IconButton
