@@ -14,6 +14,8 @@ const cart = (state = initialState, action) => {
     state = { ...state, cartModalIsOpen: true };
   } else if (action.type === "EMPTY_CART") {
     state = { ...state, cartData: { lineItems: [] } };
+  } else if (action.type === "ADD_ITEM_TO_CART") {
+    state = { ...state, cartData: action.updatedCart };
   }
   return state;
 };
@@ -29,7 +31,7 @@ export const loadLocalCart = () => {
 
 export const fetchCart = () => {
   return async (dispatch, getState) => {
-    const localCart = getState().cart.cartData.lineItems;
+    const localCart = JSON.parse(window.localStorage.getItem("localCart"));
     let userCart = (
       await axios.get("/api/orders/cart", {
         headers: {
@@ -37,32 +39,35 @@ export const fetchCart = () => {
         },
       })
     ).data;
-    await Promise.all(
-      localCart
-        .map((lineItem) => {
-          const userCartProduct = userCart.lineItems.find(
-            (userLineItem) => userLineItem.productId === lineItem.productId
-          );
-          if (userCartProduct) {
-            return {
-              product: { id: lineItem.productId },
-              quantity: lineItem.quantity + userCartProduct.quantity,
-            };
-          } else {
-            return {
-              product: { id: lineItem.productId },
-              quantity: lineItem.quantity,
-            };
-          }
-        })
-        .map((lineItem) =>
-          axios.put("/api/orders/cart", lineItem, {
-            headers: {
-              authorization: window.localStorage.getItem("token"),
-            },
+
+    if (localCart.lineItems.length) {
+      await Promise.all(
+        localCart.lineItems
+          .map((lineItem) => {
+            const userCartProduct = userCart.lineItems.find(
+              (userLineItem) => userLineItem.productId === lineItem.productId
+            );
+            if (userCartProduct) {
+              return {
+                product: { id: lineItem.productId },
+                quantity: lineItem.quantity + userCartProduct.quantity,
+              };
+            } else {
+              return {
+                product: { id: lineItem.productId },
+                quantity: lineItem.quantity,
+              };
+            }
           })
-        )
-    );
+          .map((lineItem) =>
+            axios.put("/api/orders/cart", lineItem, {
+              headers: {
+                authorization: window.localStorage.getItem("token"),
+              },
+            })
+          )
+      );
+    }
 
     userCart = (
       await axios.get("/api/orders/cart", {
@@ -72,39 +77,51 @@ export const fetchCart = () => {
       })
     ).data;
 
+    window.localStorage.setItem(
+      "localCart",
+      JSON.stringify({
+        lineItems: [],
+      })
+    );
+
     dispatch({ type: "SET_CART", cart: userCart });
   };
 };
 
 export const updateLineItemQty = (lineItem) => {
   return async (dispatch, getState) => {
-    if (getState().session.auth.id) {
-      const response = await axios.put("/api/orders/cart", lineItem, {
-        headers: {
-          authorization: window.localStorage.getItem("token"),
-        },
-      });
-      dispatch({ type: "SET_CART", cart: response.data });
-    } else {
-      let cart = getState().cart.cartData;
-      let cartLineItems = cart.lineItems;
-      cartLineItems = [
-        ...cartLineItems.filter(
-          (cartLineItem) => cartLineItem.productId !== lineItem.product.id * 1
-        ),
-        ...cartLineItems
-          .filter(
-            (cartLineItem) =>
-              cartLineItem.productId === lineItem.product.id * 1 &&
-              lineItem.quantity > 0
-          )
-          .map((cartLineItem) => {
-            return { ...cartLineItem, quantity: lineItem.quantity };
-          }),
-      ];
-      cart = { ...cart, lineItems: cartLineItems };
-      window.localStorage.setItem("localCart", JSON.stringify(cart));
-      dispatch({ type: "SET_CART", cart: cart });
+    try {
+      if (getState().session.auth.id) {
+        const response = await axios.put("/api/orders/cart", lineItem, {
+          headers: {
+            authorization: window.localStorage.getItem("token"),
+          },
+        });
+        dispatch({ type: "SET_CART", cart: response.data });
+      } else {
+        let cart = getState().cart.cartData;
+        let cartLineItems = cart.lineItems;
+        cartLineItems = [
+          ...cartLineItems.filter(
+            (cartLineItem) => cartLineItem.productId !== lineItem.product.id * 1
+          ),
+          ...cartLineItems
+            .filter(
+              (cartLineItem) =>
+                cartLineItem.productId === lineItem.product.id * 1 &&
+                lineItem.quantity > 0
+            )
+            .map((cartLineItem) => {
+              return { ...cartLineItem, quantity: lineItem.quantity };
+            }),
+        ];
+        cart = { ...cart, lineItems: cartLineItems };
+        window.localStorage.setItem("localCart", JSON.stringify(cart));
+        dispatch({ type: "SET_CART", cart: cart });
+      }
+      return "success";
+    } catch (err) {
+      console.log(err);
     }
   };
 };
@@ -130,6 +147,54 @@ export const emptyCart = () => {
       })
     );
     dispatch({ type: "EMPTY_CART" });
+  };
+};
+
+export const addItemToCart = (lineItem) => {
+  return async (dispatch, getState) => {
+    try {
+      if (getState().session.auth.id) {
+        const response = await axios.put("/api/orders/cart", lineItem, {
+          headers: {
+            authorization: window.localStorage.getItem("token"),
+          },
+        });
+        dispatch({ type: "SET_CART", cart: response.data });
+        return "success";
+      } else {
+        const localCart = JSON.parse(window.localStorage.getItem("localCart"));
+        let cart = getState().cart.cartData;
+
+        const product = getState().products.find(
+          (product) => product.id === lineItem.product.id
+        );
+
+        cart = {
+          ...cart,
+          lineItems: [
+            ...cart.lineItems,
+            {
+              id:
+                cart.lineItems.reduce((accum, lineItem) => {
+                  if (lineItem.productId > accum) {
+                    return (accum = lineItem.id);
+                  }
+                }, 0) + 1,
+              productId: lineItem.product.id,
+              quantity: lineItem.quantity,
+              product: product,
+            },
+          ],
+        };
+
+        window.localStorage.setItem("localCart", JSON.stringify(cart));
+        dispatch({ type: "SET_CART", cart: cart });
+
+        return "success";
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 };
 

@@ -9,6 +9,7 @@ import products from "./products";
 import addresses from "./addresses";
 import creditCards from "./creditCards";
 import orders from "./orders";
+import productModal from "./productModal";
 
 const reducer = combineReducers({
   session,
@@ -19,6 +20,7 @@ const reducer = combineReducers({
   addresses,
   creditCards,
   orders,
+  productModal,
 });
 
 const store = createStore(reducer, applyMiddleware(thunk, logger));
@@ -32,3 +34,4 @@ export * from "./products";
 export * from "./addresses";
 export * from "./creditCards";
 export * from "./orders";
+export * from "./productModal";
