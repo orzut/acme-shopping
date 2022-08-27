@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import "../Account.css";
 import { createAddress, getAddresses, deleteAddress } from "../store";
+import NavAccount from "./NavAccount";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
@@ -27,7 +27,6 @@ class AddressForm extends React.Component {
 
   save(ev) {
     ev.preventDefault();
-
     this.props.addAddress(this.state);
     this.setState({
       displayAddressForm: false,
@@ -65,12 +64,7 @@ class AddressForm extends React.Component {
       <div id="account-page">
         <h2>Your addresses</h2>
         <div className="container">
-          <nav>
-            <Link to="/account">Profile</Link>
-            <Link to="/account/addresses">Addresses</Link>
-            <Link to="/account/wallet">Wallet</Link>
-            <Link to="/account/orders">Purchases</Link>
-          </nav>
+          <NavAccount />
           <div className="address-container">
             <div className="add-address">
               <HashLink to="/account/addresses#address-form">
@@ -153,6 +147,7 @@ class AddressForm extends React.Component {
             />
             <TextField
               required
+              maxLength="2"
               margin="dense"
               type="text"
               name="state"

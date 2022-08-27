@@ -87,6 +87,7 @@ export const updateUser = (auth) => {
       }
     } catch (ex) {
       console.log(ex);
+      alert("Please enter valid data");
     }
   };
 };

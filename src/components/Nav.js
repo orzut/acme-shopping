@@ -25,11 +25,7 @@ class Nav extends React.Component {
 
   onClickUser() {
     if (this.props.session.auth.id) {
-      if (this.props.session.auth.userType === "admin") {
-        this.props.history.push("/account/products-info");
-      } else {
-        this.props.history.push("/account");
-      }
+      this.props.history.push("/account/profile");
     } else {
       this.props.openAccountModal();
     }

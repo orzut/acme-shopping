@@ -1,12 +1,4 @@
-const {
-  conn,
-  User,
-  Product,
-  CreditCard,
-  Address,
-  Order,
-  LineItem,
-} = require("../");
+const { conn, User, Address, Order, LineItem } = require("../");
 const { USERS } = require("./seedDataUsers");
 
 const { seedDataProducts } = require("./seedDataProducts");
@@ -17,7 +9,7 @@ const syncAndSeed = async () => {
 
     //console.log(dataProducts)
     seedDataProducts();
-
+    await Promise.all(USERS.map((user) => User.create(user)));
     const lucy = await User.create({
       firstName: "Lucy",
       lastName: "Bar",
@@ -25,17 +17,6 @@ const syncAndSeed = async () => {
       password: "lucy_pw",
       phone: "123-456-7890",
       userType: "admin",
-    });
-    const createdUsers = await Promise.all(
-      USERS.map((user) => User.create(user))
-    );
-    await CreditCard.create({
-      nameOnCard: "Lucy Foo",
-      number: "1234123412341234",
-      expirationMonth: 4,
-      expirationYear: 25,
-      pin: 573,
-      userId: lucy.id,
     });
 
     await Address.create({
@@ -51,16 +32,16 @@ const syncAndSeed = async () => {
     const lucyCart1 = await Order.create({
       userId: lucy.id,
       orderDate: date,
-      isCart: true,
+      isCart: false,
     });
     const lucyCart2 = await Order.create({
       userId: lucy.id,
       orderDate: date,
-      isCart: true,
+      isCart: false,
     });
     await LineItem.create({
       quantity: 5,
-      productId: 1,
+      productId: 2,
       orderId: lucyCart1.id,
     });
     await LineItem.create({
@@ -78,16 +59,6 @@ const syncAndSeed = async () => {
       productId: 6,
       orderId: lucyCart2.id,
     });
-    // await LineItem.create({
-    //   quantity: 5,
-    //   productId: nsync.id,
-    //   orderId: lucyCart.id,
-    // });
-    // await LineItem.create({
-    //   quantity: 5,
-    //   productId: kendrickLamar.id,
-    //   orderId: lucyCart.id,
-    // });
   } catch (ex) {
     console.log(ex);
   }

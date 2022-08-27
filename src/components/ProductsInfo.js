@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import "../Account.css";
 import { updateProduct, deleteProduct } from "../store";
 import EditProduct from "./EditProduct";
+import NavAccount from "./NavAccount";
 
 class ProductsInfo extends React.Component {
   constructor() {
@@ -24,13 +24,9 @@ class ProductsInfo extends React.Component {
 
     return (
       <div id="account-page">
-        <h2>Welcome {session.auth.firstName}</h2>
+        <h2>Products Table</h2>
         <div className="container">
-          <nav id="admin-nav">
-            <Link to="/account/add-product">Create Product</Link>
-            <Link to="/account/products-info">Products</Link>
-            <Link to="/account/users-info">Users</Link>
-          </nav>
+          <NavAccount />
           <table className="products-table">
             <thead>
               <tr>
