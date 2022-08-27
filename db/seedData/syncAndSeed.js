@@ -9,7 +9,7 @@ const syncAndSeed = async () => {
 
     //console.log(dataProducts)
     seedDataProducts();
-
+    await Promise.all(USERS.map((user) => User.create(user)));
     const lucy = await User.create({
       firstName: "Lucy",
       lastName: "Bar",
