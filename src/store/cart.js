@@ -198,9 +198,29 @@ export const addItemToCart = (lineItem) => {
   };
 };
 
-export const processOrder = (cartId) => {
+export const processOrder = (orderInfo) => {
   return async (dispatch) => {
-    console.log("processOrder ran");
+    try {
+      if (orderInfo.cart.id) {
+        await axios.post("/api/orders", orderInfo.cart.id, {
+          headers: {
+            authorization: window.localStorage.getItem("token"),
+          },
+        });
+        dispatch({ type: "EMPTY_CART" });
+      } else {
+        await axios.post("/api/orders/processGuestOrder", orderInfo);
+        window.localStorage.setItem(
+          "localCart",
+          JSON.stringify({
+            lineItems: [],
+          })
+        );
+        dispatch({ type: "EMPTY_CART" });
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 };
 

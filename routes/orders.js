@@ -2,7 +2,7 @@ const express = require("express");
 require("dotenv").config();
 const app = express.Router();
 const { isLoggedIn } = require("./middleware");
-const { Order, User } = require("../db");
+const { Order, User, LineItem } = require("../db");
 const stripe = require("stripe")(process.env.SECRET_KEY);
 
 console.log(process.env.SECRET_KEY);
@@ -26,6 +26,42 @@ app.post("/", isLoggedIn, async (req, res, next) => {
     res.send(await req.user.createOrderFromCart());
   } catch (ex) {
     next(ex);
+  }
+});
+
+app.post("/processGuestOrder", async (req, res, next) => {
+  try {
+    const { billingInfo, cart } = req.body;
+    const guestUser = await User.create({
+      firstName: `guest${Math.random().toString().slice(2, 11)}`,
+      lastName: `guest${Math.random().toString().slice(2, 11)}`,
+      email: billingInfo.email,
+      phone: "999-999-9999",
+      userType: "user",
+      password: `${Math.random().toString().slice(2, 11)}`,
+    });
+
+    const date = new Date();
+
+    const guestOrder = await Order.create({
+      userId: guestUser.id,
+      isCart: false,
+      orderDate: date.getTime(),
+    });
+
+    await Promise.all(
+      cart.lineItems.map((lineItem) =>
+        LineItem.create({
+          quantity: lineItem.quantity,
+          orderId: guestOrder.id,
+          productId: lineItem.productId,
+        })
+      )
+    );
+
+    res.sendStatus(200);
+  } catch (err) {
+    next(err);
   }
 });
 
