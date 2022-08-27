@@ -1,8 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
+import ProductList from './ProductList'
 
-const Categories = ({ categories }) => {
-  return <h1>Categories Page</h1>;
+const Categories = ({ products }) => {
+  return <ProductList products={products} />;
 };
 
 export default connect((state) => state)(Categories);

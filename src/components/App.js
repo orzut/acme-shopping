@@ -78,7 +78,7 @@ class App extends React.Component {
         <Route
           path={["/products/category/:id", "/products/genre/:id"]}
           component={Products}
-        ></Route>
+        />
         {session.auth.id ? (
           <Fragment>
             <Route path="/cart" component={CartModal} />
