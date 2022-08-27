@@ -28,7 +28,7 @@ const Checkout = ({ cart, session, addresses, history, processOrder }) => {
   // session.auth.id ? `${session.auth.firstName} ${session.auth.lastName}` : ""
 
   useEffect(() => {
-    console.log(history);
+    //console.log(history);
 
     const primaryAddress =
       addresses.length > 0
@@ -62,9 +62,9 @@ const Checkout = ({ cart, session, addresses, history, processOrder }) => {
   const stripe = useStripe();
   const elements = useElements();
 
-  const handleCardDetailsChange = (ev) => {
-    ev.error ? setCheckoutError(ev.error.message) : setCheckoutError();
-  };
+  // const handleCardDetailsChange = (ev) => {
+  //   ev.error ? setCheckoutError(ev.error.message) : setCheckoutError();
+  // };
 
   const handleFormSubmit = async (ev) => {
     ev.preventDefault();
@@ -80,7 +80,7 @@ const Checkout = ({ cart, session, addresses, history, processOrder }) => {
       },
     };
 
-    console.log(billingDetails);
+    // console.log(billingDetails);
 
     setProcessingTo(true);
 
@@ -120,7 +120,7 @@ const Checkout = ({ cart, session, addresses, history, processOrder }) => {
       }
 
       history.push("/successfulCheckout");
-      processOrder(cart.cartData.id);
+      processOrder({ cart: cart.cartData, billingInfo: billingDetails });
     } catch (err) {
       setCheckoutError(err.message);
     }
@@ -336,9 +336,8 @@ const Checkout = ({ cart, session, addresses, history, processOrder }) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    processOrder: (cartId) => {
-      console.log("this ran");
-      dispatch(processOrder(cartId));
+    processOrder: (orderInfo) => {
+      dispatch(processOrder(orderInfo));
     },
   };
 };
