@@ -8,7 +8,6 @@ import Product from "./Product";
 const Home = ({ categories, products, openProductModal }) => {
   return (
     <div className="home-page">
-      <h1>Home Page</h1>
       {categories.map((category) => {
         return (
           <div key={category.id}>
