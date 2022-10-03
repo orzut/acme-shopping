@@ -4,7 +4,7 @@ import ProductList from "./ProductList";
 
 const Products = ({ byCategories, byGenres, match }) => {
   let products = match.path === "/products/genre/:id" ? byGenres : byCategories;
-  return <ProductList products={products} />;
+  return <ProductList products={products} match={match} />;
 };
 
 const mapStateToProps = ({ products, categories, genres }, { match }) => {
